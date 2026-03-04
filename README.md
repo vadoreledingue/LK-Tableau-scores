@@ -15,6 +15,10 @@
   Classements, progression des points, historique officiel des affrontements et panneau d'administration.
 </p>
 
+<p align="center">
+  Site en ligne: <a href="http://kinshima.duckdns.org:8080/">http://kinshima.duckdns.org:8080/</a>
+</p>
+
 ---
 
 ## Apercu
@@ -67,6 +71,9 @@
 1. Ouvrir `index.html`.
 2. Aller sur `admin.html` via le lien en bas de page pour la gestion.
 
+- `cd /var/www/kinshima`
+- `sudo git pull`
+
 ---
 
 ## Export CSV
@@ -98,6 +105,10 @@ Utilisation recommandee:
 - Le mot de passe admin est conserve dans:
   - `localStorage` (fallback)
   - IndexedDB (`kinshima-results-db` / store `settings`) pour une meilleure resilience apres mise a jour
+- Synchronisation globale (tous les utilisateurs):
+  - le front tente `GET/PUT /api/admin-password`
+  - format attendu: `{ "password": "votre-mot-de-passe" }`
+  - si l'API n'existe pas, la mise a jour reste locale au navigateur
 
 ---
 

@@ -278,6 +278,14 @@ form,
   align-items: start;
 }
 
+.admin-score-card {
+  margin-bottom: 0.9rem;
+}
+
+.admin-score-card #score-form {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
 .admin-card,
 .chart-card {
   border: 1px solid rgba(231, 191, 90, 0.24);
@@ -509,6 +517,10 @@ tbody tr:hover {
     margin-bottom: 1.5rem;
   }
 
+  .admin-score-card #score-form {
+    grid-template-columns: 1fr;
+  }
+
   .admin-results-toolbar {
     align-items: stretch;
   }
@@ -537,6 +549,14 @@ tbody tr:hover {
   .menu-item {
     padding: 0.28rem 0.58rem;
     font-size: 0.78rem;
+  }
+
+  .admin-card {
+    padding: 0.62rem;
+  }
+
+  .admin-results-panel {
+    padding: 0.72rem;
   }
 
   table {
@@ -583,22 +603,23 @@ tbody tr:hover {
   }
 
   .responsive-table tr {
-    margin-bottom: 0.45rem;
-    padding: 0.32rem 0.42rem;
+    margin-bottom: 0.36rem;
+    padding: 0.24rem 0.34rem;
     border: 1px solid rgba(231, 191, 90, 0.24);
-    border-radius: 10px;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.02);
   }
 
   .responsive-table td {
     border-bottom: 1px dashed rgba(231, 191, 90, 0.2);
-    padding: 0.28rem 0.2rem;
+    padding: 0.2rem 0.12rem;
     text-align: right;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.45rem;
-    font-size: 0.83rem;
+    gap: 0.3rem;
+    font-size: 0.76rem;
+    line-height: 1.2;
   }
 
   .responsive-table td:last-child {
@@ -611,7 +632,7 @@ tbody tr:hover {
     font-weight: 700;
     color: #fff1c4;
     white-space: nowrap;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
   }
 
   .responsive-table .team-badge {
@@ -620,12 +641,74 @@ tbody tr:hover {
   }
 
   .responsive-table .team-logo {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   .responsive-table .team-dot {
-    width: 0.52rem;
-    height: 0.52rem;
+    width: 0.44rem;
+    height: 0.44rem;
+  }
+
+  .admin-results-panel .panel-head .actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-results-panel .panel-head .actions label {
+    min-width: 0;
+  }
+
+  .admin-results-panel .table-wrap {
+    overflow: visible;
+  }
+
+  .responsive-admin-table {
+    min-width: 0;
+  }
+
+  .responsive-admin-table td {
+    text-align: left;
+    display: block;
+    padding: 0.26rem 0.12rem;
+  }
+
+  .responsive-admin-table td::before {
+    display: block;
+    margin-bottom: 0.18rem;
+  }
+
+  .responsive-admin-table td input,
+  .responsive-admin-table td select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .responsive-admin-table .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    width: 100%;
+  }
+
+  .responsive-admin-table .actions button {
+    width: 100%;
+    min-height: 34px;
+    padding: 0.38rem 0.42rem;
+    font-size: 0.78rem;
+  }
+
+  .admin-results-toolbar {
+    gap: 0.45rem;
+  }
+
+  .admin-results-toolbar label {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .admin-results-pagination {
+    gap: 0.35rem;
   }
 }
