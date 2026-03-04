@@ -70,43 +70,46 @@ const currentPasswordInput = document.getElementById("admin-current-password");
 const newPasswordInput = document.getElementById("admin-new-password");
 const confirmPasswordInput = document.getElementById("admin-confirm-password");
 
+const hasPublicView = Boolean(rankingHead && rankingBody && historyBody);
+const hasAdminView = Boolean(adminLocked && adminUnlocked && adminLoginForm);
+
 let lockTimerId = null;
 
 initialize();
 
 function initialize() {
   hydrateEntries();
-  if (!dateInput.value) {
+  if (dateInput && !dateInput.value) {
     dateInput.valueAsDate = new Date();
   }
 
   refreshAllControls(getCurrentSeasonCode());
-  renderAll();
-  syncAdminUI();
+  if (hasPublicView) renderAll();
+  if (hasAdminView) syncAdminUI();
   wireEvents();
 }
 
 function wireEvents() {
-  activeSeasonSelect.addEventListener("change", renderAll);
-  filterSeason.addEventListener("change", renderHistory);
-  filterTeam.addEventListener("change", renderHistory);
-  filterCategory.addEventListener("change", renderHistory);
+  if (activeSeasonSelect) activeSeasonSelect.addEventListener("change", renderAll);
+  if (filterSeason) filterSeason.addEventListener("change", renderHistory);
+  if (filterTeam) filterTeam.addEventListener("change", renderHistory);
+  if (filterCategory) filterCategory.addEventListener("change", renderHistory);
 
-  adminLoginForm.addEventListener("submit", handleAdminLogin);
-  adminLogout.addEventListener("click", handleAdminLogout);
+  if (adminLoginForm) adminLoginForm.addEventListener("submit", handleAdminLogin);
+  if (adminLogout) adminLogout.addEventListener("click", handleAdminLogout);
 
-  scoreForm.addEventListener("submit", handleScoreSubmit);
-  resetButton.addEventListener("click", handleResetScores);
+  if (scoreForm) scoreForm.addEventListener("submit", handleScoreSubmit);
+  if (resetButton) resetButton.addEventListener("click", handleResetScores);
 
-  teamAddForm.addEventListener("submit", handleTeamAdd);
-  teamRenameForm.addEventListener("submit", handleTeamRename);
-  teamDeleteForm.addEventListener("submit", handleTeamDelete);
+  if (teamAddForm) teamAddForm.addEventListener("submit", handleTeamAdd);
+  if (teamRenameForm) teamRenameForm.addEventListener("submit", handleTeamRename);
+  if (teamDeleteForm) teamDeleteForm.addEventListener("submit", handleTeamDelete);
 
-  categoryAddForm.addEventListener("submit", handleCategoryAdd);
-  categoryRenameForm.addEventListener("submit", handleCategoryRename);
-  categoryDeleteForm.addEventListener("submit", handleCategoryDelete);
+  if (categoryAddForm) categoryAddForm.addEventListener("submit", handleCategoryAdd);
+  if (categoryRenameForm) categoryRenameForm.addEventListener("submit", handleCategoryRename);
+  if (categoryDeleteForm) categoryDeleteForm.addEventListener("submit", handleCategoryDelete);
 
-  passwordChangeForm.addEventListener("submit", handlePasswordChange);
+  if (passwordChangeForm) passwordChangeForm.addEventListener("submit", handlePasswordChange);
 }
 
 function handleAdminLogin(event) {
@@ -210,7 +213,7 @@ function handleTeamAdd(event) {
   state.teams.push(newName);
   teamAddInput.value = "";
   saveState();
-  refreshAllControls(activeSeasonSelect.value);
+  refreshAllControls(activeSeasonSelect ? activeSeasonSelect.value : getCurrentSeasonCode());
   renderAll();
   showAdminFeedback("Clan ajoute.", "success");
 }
@@ -239,7 +242,7 @@ function handleTeamRename(event) {
 
   teamRenameInput.value = "";
   saveState();
-  refreshAllControls(activeSeasonSelect.value);
+  refreshAllControls(activeSeasonSelect ? activeSeasonSelect.value : getCurrentSeasonCode());
   renderAll();
   showAdminFeedback("Clan renomme.", "success");
 }
@@ -264,7 +267,7 @@ function handleTeamDelete(event) {
 
   state.teams = state.teams.filter((team) => team !== target);
   saveState();
-  refreshAllControls(activeSeasonSelect.value);
+  refreshAllControls(activeSeasonSelect ? activeSeasonSelect.value : getCurrentSeasonCode());
   renderAll();
   showAdminFeedback("Clan supprime.", "success");
 }
@@ -286,7 +289,7 @@ function handleCategoryAdd(event) {
   state.categories.push(newName);
   categoryAddInput.value = "";
   saveState();
-  refreshAllControls(activeSeasonSelect.value);
+  refreshAllControls(activeSeasonSelect ? activeSeasonSelect.value : getCurrentSeasonCode());
   renderAll();
   showAdminFeedback("Categorie ajoutee.", "success");
 }
@@ -315,7 +318,7 @@ function handleCategoryRename(event) {
 
   categoryRenameInput.value = "";
   saveState();
-  refreshAllControls(activeSeasonSelect.value);
+  refreshAllControls(activeSeasonSelect ? activeSeasonSelect.value : getCurrentSeasonCode());
   renderAll();
   showAdminFeedback("Categorie renommee.", "success");
 }
@@ -340,7 +343,7 @@ function handleCategoryDelete(event) {
 
   state.categories = state.categories.filter((category) => category !== target);
   saveState();
-  refreshAllControls(activeSeasonSelect.value);
+  refreshAllControls(activeSeasonSelect ? activeSeasonSelect.value : getCurrentSeasonCode());
   renderAll();
   showAdminFeedback("Categorie supprimee.", "success");
 }
@@ -376,6 +379,7 @@ function handlePasswordChange(event) {
 }
 
 function syncAdminUI() {
+  if (!hasAdminView) return;
   const unlocked = isAdmin();
 
   adminLocked.classList.toggle("hidden", unlocked);
@@ -423,6 +427,7 @@ function setupLockoutTicker() {
 }
 
 function showLoginError(message) {
+  if (!adminLoginError || !adminLockInfo) return;
   adminLoginError.textContent = message;
   adminLoginError.classList.remove("hidden");
   adminLockInfo.textContent = message;
@@ -450,23 +455,28 @@ function refreshAllControls(preferredSeason) {
 
 function refreshSeasonControls(preferredSeason) {
   const seasons = getSeasonList(state.entries);
-  const previousActive = activeSeasonSelect.value;
-  const previousFilter = filterSeason.value;
+  const previousActive = activeSeasonSelect ? activeSeasonSelect.value : "";
+  const previousFilter = filterSeason ? filterSeason.value : "";
 
-  seasonsList.innerHTML = "";
-  seasons.forEach((season) => {
-    const option = document.createElement("option");
-    option.value = season;
-    seasonsList.appendChild(option);
-  });
+  if (seasonsList) {
+    seasonsList.innerHTML = "";
+    seasons.forEach((season) => {
+      const option = document.createElement("option");
+      option.value = season;
+      seasonsList.appendChild(option);
+    });
+  }
 
-  fillSelect(activeSeasonSelect, seasons, { includeAll: true, allLabel: "Toutes" });
-  fillSelect(filterSeason, seasons, { includeAll: true, allLabel: "Toutes" });
+  if (activeSeasonSelect) {
+    fillSelect(activeSeasonSelect, seasons, { includeAll: true, allLabel: "Toutes" });
+    activeSeasonSelect.value = chooseSelectValue(activeSeasonSelect, [preferredSeason, previousActive, getCurrentSeasonCode(), "all"]);
+  }
+  if (filterSeason) {
+    fillSelect(filterSeason, seasons, { includeAll: true, allLabel: "Toutes" });
+    filterSeason.value = chooseSelectValue(filterSeason, [preferredSeason, previousFilter, "all"]);
+  }
 
-  activeSeasonSelect.value = chooseSelectValue(activeSeasonSelect, [preferredSeason, previousActive, getCurrentSeasonCode(), "all"]);
-  filterSeason.value = chooseSelectValue(filterSeason, [preferredSeason, previousFilter, "all"]);
-
-  if (!seasonInput.value) {
+  if (seasonInput && !seasonInput.value) {
     seasonInput.value = getCurrentSeasonCode();
   }
 }
@@ -486,6 +496,7 @@ function refreshCategoryControls() {
 }
 
 function fillSelect(selectElement, values, options = {}) {
+  if (!selectElement) return;
   const { includeAll = false, allLabel = "Toutes" } = options;
   const previousValue = selectElement.value;
 
@@ -516,12 +527,14 @@ function chooseSelectValue(selectElement, candidates) {
 }
 
 function renderAll() {
+  if (!hasPublicView) return;
   renderRanking();
   renderHistory();
 }
 
 function renderRanking() {
-  const seasonFilter = activeSeasonSelect.value;
+  if (!rankingHead || !rankingBody) return;
+  const seasonFilter = activeSeasonSelect ? activeSeasonSelect.value : "all";
   const scopedEntries = state.entries.filter((entry) => seasonFilter === "all" || entry.season === seasonFilter);
 
   rankingHead.innerHTML = "";
@@ -559,9 +572,10 @@ function renderRanking() {
 }
 
 function renderHistory() {
-  const seasonFilter = filterSeason.value;
-  const teamFilter = filterTeam.value;
-  const categoryFilter = filterCategory.value;
+  if (!historyBody) return;
+  const seasonFilter = filterSeason ? filterSeason.value : "all";
+  const teamFilter = filterTeam ? filterTeam.value : "all";
+  const categoryFilter = filterCategory ? filterCategory.value : "all";
 
   const rows = state.entries
     .filter((entry) => seasonFilter === "all" || entry.season === seasonFilter)
@@ -691,6 +705,7 @@ function saveSecurityState() {
 }
 
 function showAdminFeedback(message, type) {
+  if (!adminFeedback) return;
   adminFeedback.textContent = message;
   adminFeedback.classList.remove("hidden", "success", "error");
   adminFeedback.classList.add(type === "error" ? "error" : "success");

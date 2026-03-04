@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ligue Kinshima - Panneau admin</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <p class="kicker">Ligue Kinshima</p>
+    <h1>Panneau administration</h1>
+    <p class="subtitle">Gestion des scores, clans et categories de competition.</p>
+    <a class="kinshima-link" href="index.html">Retour a la page publique</a>
+  </header>
+
+  <main class="layout">
+    <section class="panel admin-panel">
+      <div class="panel-head">
+        <h2>Panneau admin</h2>
+        <button id="admin-logout" type="button" class="ghost hidden">Verrouiller</button>
+      </div>
+
+      <div id="admin-locked" class="admin-lock">
+        <p>Acces reserve aux organisateurs de la Ligue.</p>
+        <form id="admin-login-form" class="inline-form">
+          <label>
+            Mot de passe
+            <input id="admin-password" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Deverrouiller</button>
+        </form>
+        <p id="admin-lock-info" class="note">5 erreurs consecutives bloquent l'acces pendant 5 minutes.</p>
+        <p id="admin-login-error" class="error hidden">Mot de passe invalide.</p>
+      </div>
+
+      <div id="admin-unlocked" class="hidden">
+        <p id="admin-feedback" class="feedback hidden"></p>
+        <div class="admin-grid">
+          <section class="admin-card">
+            <h3>Saisir un score</h3>
+            <form id="score-form">
+              <label>
+                Saison (format LKxx)
+                <input id="season" type="text" list="seasons-list" placeholder="Ex: LK26" required />
+                <datalist id="seasons-list"></datalist>
+              </label>
+
+              <label>
+                Clan
+                <select id="team" required></select>
+              </label>
+
+              <label>
+                Categorie
+                <select id="category" required></select>
+              </label>
+
+              <label>
+                Score
+                <input id="score" type="number" min="0" max="1000" required />
+              </label>
+
+              <label>
+                Note combat
+                <input id="note" type="text" maxlength="80" placeholder="Ex: Duel final" />
+              </label>
+
+              <label>
+                Date
+                <input id="date" type="date" required />
+              </label>
+
+              <div class="actions">
+                <button type="submit">Ajouter</button>
+                <button id="reset-data" type="button" class="ghost">Reinitialiser les scores</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="admin-card">
+            <h3>Gestion des clans</h3>
+            <form id="team-rename-form" class="inline-form">
+              <label>
+                Clan existant
+                <select id="team-rename-select"></select>
+              </label>
+              <label>
+                Nouveau nom
+                <input id="team-rename-input" type="text" maxlength="40" required />
+              </label>
+              <button type="submit">Renommer</button>
+            </form>
+
+            <form id="team-add-form" class="inline-form">
+              <label>
+                Ajouter un clan
+                <input id="team-add-input" type="text" maxlength="40" placeholder="Ex: Gardiens d'Alfanos" required />
+              </label>
+              <button type="submit">Ajouter clan</button>
+            </form>
+
+            <form id="team-delete-form" class="inline-form">
+              <label>
+                Supprimer un clan
+                <select id="team-delete-select"></select>
+              </label>
+              <button type="submit" class="ghost">Supprimer clan</button>
+            </form>
+          </section>
+
+          <section class="admin-card">
+            <h3>Gestion des categories</h3>
+            <form id="category-rename-form" class="inline-form">
+              <label>
+                Categorie existante
+                <select id="category-rename-select"></select>
+              </label>
+              <label>
+                Nouveau nom
+                <input id="category-rename-input" type="text" maxlength="40" required />
+              </label>
+              <button type="submit">Renommer</button>
+            </form>
+
+            <form id="category-add-form" class="inline-form">
+              <label>
+                Ajouter une categorie
+                <input id="category-add-input" type="text" maxlength="40" placeholder="Ex: Tactique" required />
+              </label>
+              <button type="submit">Ajouter categorie</button>
+            </form>
+
+            <form id="category-delete-form" class="inline-form">
+              <label>
+                Supprimer une categorie
+                <select id="category-delete-select"></select>
+              </label>
+              <button type="submit" class="ghost">Supprimer categorie</button>
+            </form>
+          </section>
+
+          <section class="admin-card">
+            <h3>Securite admin</h3>
+            <form id="admin-password-change-form" class="inline-form">
+              <label>
+                Mot de passe actuel
+                <input id="admin-current-password" type="password" autocomplete="current-password" required />
+              </label>
+              <label>
+                Nouveau mot de passe
+                <input id="admin-new-password" type="password" minlength="8" autocomplete="new-password" required />
+              </label>
+              <label>
+                Confirmation
+                <input id="admin-confirm-password" type="password" minlength="8" autocomplete="new-password" required />
+              </label>
+              <button type="submit">Changer mot de passe</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

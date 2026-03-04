@@ -4,7 +4,8 @@ Site web interactif pour la competition martiale des clans de la Ligue Kinshima.
 
 ### Fichiers
 
-- `index.html` : interface publique + panneau admin
+- `index.html` : interface publique (classement + historique)
+- `admin.html` : panneau admin sur page dediee
 - `styles.css` : theme inspire de l'univers Kinshima
 - `script.js` : logique scores/saisons/admin/equipes/categories/securite
 
@@ -32,5 +33,5 @@ Site web interactif pour la competition martiale des clans de la Ligue Kinshima.
 
 ### Lancer
 
-1. Ouvrir `index.html` dans un navigateur.
-2. Utiliser le panneau admin pour saisir les scores au fil de la saison.
+1. Ouvrir `index.html` pour la consultation publique.
+2. Ouvrir `admin.html` pour la gestion admin (ou via le lien sur la page publique).
