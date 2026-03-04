@@ -538,3 +538,59 @@ tbody tr:hover {
     height: 18px;
   }
 }
+
+@media (max-width: 640px) {
+  .main-menu {
+    justify-content: center;
+  }
+
+  .responsive-table {
+    min-width: 0;
+  }
+
+  .responsive-table thead {
+    display: none;
+  }
+
+  .responsive-table,
+  .responsive-table tbody,
+  .responsive-table tr,
+  .responsive-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .responsive-table tr {
+    margin-bottom: 0.7rem;
+    padding: 0.5rem 0.55rem;
+    border: 1px solid rgba(231, 191, 90, 0.24);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .responsive-table td {
+    border-bottom: 1px dashed rgba(231, 191, 90, 0.2);
+    padding: 0.45rem 0.3rem;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .responsive-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .responsive-table td::before {
+    content: attr(data-label);
+    text-align: left;
+    font-weight: 700;
+    color: #fff1c4;
+    white-space: nowrap;
+  }
+
+  .responsive-table .team-badge {
+    justify-content: flex-end;
+  }
+}
