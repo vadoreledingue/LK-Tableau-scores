@@ -74,3 +74,7 @@ Depuis le panneau admin:
 - ouvrir `Gestion des resultats individuels`
 - cliquer `Exporter CSV`
 - ouvrir le fichier telecharge dans Excel ou LibreOffice
+
+---
+
+Copyright Kinshima 2026
