@@ -78,7 +78,6 @@
 
               <div class="actions">
                 <button type="submit">Ajouter</button>
-                <button id="reset-data" type="button" class="ghost">Reinitialiser les scores</button>
               </div>
             </form>
           </section>
@@ -183,6 +182,47 @@
             </form>
           </section>
         </div>
+
+        <section class="admin-card admin-results-panel">
+          <div class="panel-head">
+            <h3>Gestion des resultats individuels</h3>
+            <button id="admin-results-export-csv" type="button">Exporter CSV</button>
+          </div>
+          <p class="note">Edition et suppression apres saisie. Affichage pagine pour rester lisible.</p>
+          <div class="admin-results-toolbar">
+            <label>
+              Resultats par page
+              <select id="admin-results-page-size">
+                <option value="10">10</option>
+                <option value="20" selected>20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+            <p id="admin-results-total" class="note">0 resultat</p>
+            <div class="admin-results-pagination">
+              <button id="admin-results-prev" type="button">Precedent</button>
+              <p id="admin-results-page-info" class="note">Page 1 / 1</p>
+              <button id="admin-results-next" type="button">Suivant</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date/Heure</th>
+                  <th>Saison</th>
+                  <th>Clan</th>
+                  <th>Categorie</th>
+                  <th>Score</th>
+                  <th>Note</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-results-body"></tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </section>
   </main>
@@ -192,7 +232,7 @@
     <a class="tiny-admin-link" href="admin.html">admin</a>
   </footer>
 
+  <script src="db.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-
