@@ -36,9 +36,8 @@
 
 ---
 
-## Structure Clans / Categories / Sous-categories
+## Structure Categories / Sous-categories
 
-- `Clan`: une equipe (ex: Alphanos, Arturok, Bragnir, O-Tsuyujin, Seklan, Son-Enma)
 - `Categorie martiale`:
   - `Petits`
   - `Moyens`
@@ -56,15 +55,7 @@ Schema Mermaid (compatible GitHub):
 
 ```mermaid
 flowchart TD
-    A[Ligue Kinshima] --> B[Clans]
-    B --> B1[Alphanos]
-    B --> B2[Arturok]
-    B --> B3[Bragnir]
-    B --> B4[O-Tsuyujin]
-    B --> B5[Seklan]
-    B --> B6[Son-Enma]
-
-    A --> C[Categories]
+    A[Ligue Kinshima] --> C[Categories]
     C --> C1[Martiales]
     C --> C2[Narratives]
 
