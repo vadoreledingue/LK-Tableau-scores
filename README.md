@@ -1,77 +1,76 @@
-﻿# Ligue Kinshima
+﻿# LIGUE KINSHIMA
 
-## Tableau des scores des clans
+## Tableau des Scores des Clans
 
-Interface web de suivi des affrontements Kinshima: classement, progression dans le temps, historique detaille, et administration securisee.
+<p align="center">
+  <img src="logos/Alphanos.png" alt="Alphanos" width="42" />
+  <img src="logos/Arturok.png" alt="Arturok" width="42" />
+  <img src="logos/Bragnir.png" alt="Bragnir" width="42" />
+  <img src="logos/O-Tsuyujin.png" alt="O-Tsuyujin" width="42" />
+  <img src="logos/Seklan.png" alt="Seklan" width="42" />
+  <img src="logos/Son-Enma.png" alt="Son-Enma" width="42" />
+</p>
 
----
-
-## Identite Visuelle des Clans
-
-| Clan       | Logo                                     |
-| ---------- | ---------------------------------------- |
-| Alphanos   | ![Logo Alphanos](logos/Alphanos.png)     |
-| Arturok    | ![Logo Arturok](logos/Arturok.png)       |
-| Bragnir    | ![Logo Bragnir](logos/Bragnir.png)       |
-| O-Tsuyujin | ![Logo O-Tsuyujin](logos/O-Tsuyujin.png) |
-| Seklan     | ![Logo Seklan](logos/Seklan.png)         |
-| Son-Enma   | ![Logo Son-Enma](logos/Son-Enma.png)     |
+<p align="center">
+  Classements, progression des points, historique officiel des affrontements et panneau d'administration.
+</p>
 
 ---
 
-## Fonctionnalites Principales
+## Apercu
 
-- Classement des clans par saison
-- Visualisation de la progression des points (saison active)
-- Visualisation des points globaux (toutes saisons)
-- Historique filtrable (saison, clan, categorie)
-- Horodatage precis des resultats (`date + heure + minutes`)
-- Lien admin en bas de la page publique
-
-## Administration
-
-- Saisie des resultats depuis `admin.html`
-- Gestion individuelle des resultats:
-  - modification apres saisie
-  - suppression individuelle
-  - pagination (taille de page configurable)
-  - export CSV (compatible Excel)
-- Gestion des clans:
-  - ajout, renommage, suppression protegee
-  - personnalisation couleur et logo
-- Gestion des categories:
-  - ajout, renommage, suppression protegee
-- Securite:
-  - authentification admin
-  - protection anti brute-force (`5` erreurs -> blocage `5` minutes)
-
-## Stockage des Donnees
-
-- Resultats: base separee **IndexedDB** (`kinshima-results-db`, store `results`) via `db.js`
-- Donnees d'application (config, styles, securite): `localStorage`
-- Export des resultats en `.csv` disponible depuis l'admin
+- Page publique `index.html`:
+  - classement par saison
+  - visualisation des points
+  - historique filtrable
+- Page admin `admin.html`:
+  - saisie des resultats
+  - gestion des clans et categories
+  - gestion individuelle des resultats (modifier/supprimer)
+  - pagination des resultats
+  - export CSV (Excel compatible)
 
 ---
 
-## Structure du Projet
+## Stack et Donnees
 
-- `index.html`: page publique
-- `admin.html`: panneau d'administration
-- `styles.css`: theme visuel (ambiance Kinshima: nuit, royal, or)
-- `script.js`: logique interface/metier
-- `db.js`: persistence des resultats (IndexedDB)
+- UI: `HTML`, `CSS`, `JavaScript` vanilla
+- Resultats: `IndexedDB` via `db.js`
+  - base: `kinshima-results-db`
+  - store: `results`
+- Config applicative (hors resultats): `localStorage`
+
+---
+
+## Structure
+
+- `index.html`: vue publique
+- `admin.html`: panneau admin
+- `styles.css`: theme Kinshima (nuit / royal / or)
+- `script.js`: logique metier et UI
+- `db.js`: persistence des resultats
 - `logos/`: logos des clans
 
 ---
 
-## Acces Admin
+## Securite Admin
 
 - Mot de passe initial: `Kinshima-Admin-2026`
-- Le mot de passe peut etre modifie dans le panneau admin
+- Blocage anti brute-force: `5` erreurs consecutives => blocage `5` minutes
 
 ---
 
 ## Demarrage
 
-1. Ouvrir `index.html` pour la consultation publique.
-2. Ouvrir `admin.html` pour la gestion admin.
+1. Ouvrir `index.html`.
+2. Aller sur `admin.html` via le lien en bas de page pour la gestion.
+
+---
+
+## Export CSV
+
+Depuis le panneau admin:
+
+- ouvrir `Gestion des resultats individuels`
+- cliquer `Exporter CSV`
+- ouvrir le fichier telecharge dans Excel ou LibreOffice
