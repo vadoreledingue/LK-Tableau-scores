@@ -32,6 +32,8 @@
 
 ---
 
+---
+
 ## Stack et Donnees
 
 - UI: `HTML`, `CSS`, `JavaScript` vanilla
