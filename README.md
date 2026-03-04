@@ -36,6 +36,53 @@
 
 ---
 
+## Structure Clans / Categories / Sous-categories
+
+- `Clan`: une equipe (ex: Alphanos, Arturok, Bragnir, O-Tsuyujin, Seklan, Son-Enma)
+- `Categorie martiale`:
+  - `Petits`
+  - `Moyens`
+  - `Grands`
+  - `Kinyobis`
+  - `Chefs de clan`
+- `Categorie narrative`:
+  - `Missions`
+  - `Quetes`
+  - `Craft`
+  - `Duel`
+  - `Hugen`
+
+Schema Mermaid (compatible GitHub):
+
+```mermaid
+flowchart TD
+    A[Ligue Kinshima] --> B[Clans]
+    B --> B1[Alphanos]
+    B --> B2[Arturok]
+    B --> B3[Bragnir]
+    B --> B4[O-Tsuyujin]
+    B --> B5[Seklan]
+    B --> B6[Son-Enma]
+
+    A --> C[Categories]
+    C --> C1[Martiales]
+    C --> C2[Narratives]
+
+    C1 --> M1[Petits]
+    C1 --> M2[Moyens]
+    C1 --> M3[Grands]
+    C1 --> M4[Kinyobis]
+    C1 --> M5[Chefs de clan]
+
+    C2 --> N1[Missions]
+    C2 --> N2[Quetes]
+    C2 --> N3[Craft]
+    C2 --> N4[Duel]
+    C2 --> N5[Hugen]
+```
+
+---
+
 ---
 
 ## Stack et Donnees
