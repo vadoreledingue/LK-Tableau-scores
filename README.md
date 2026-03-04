@@ -17,11 +17,14 @@ Site web interactif pour la competition martiale des clans de la Ligue Kinshima.
 - Classement des clans par saison
 - Graphique de progression dans le temps (saison active)
 - Graphique global des points (toutes saisons)
+- Horodatage des resultats en date + heure (minutes)
 - Historique filtrable
+- Resultats stockes dans une base separee (IndexedDB `kinshima-results-db`)
 - Personnalisation equipe depuis admin:
   - Couleur d'equipe
   - Upload/remplacement de logo d'equipe
   - Suppression du logo
+- Logos par defaut des 6 clans (dossier `logos/`)
 - Gestion admin des clans/categories (ajout, renommage, suppression protegee)
 - Protection anti brute-force: 5 erreurs consecutives -> blocage 5 minutes
 - Saisons au format `LK26`, `LK27`, `LK28`...
