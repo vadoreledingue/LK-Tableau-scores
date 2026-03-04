@@ -23,6 +23,14 @@
       <div class="panel-head">
         <h2>Classement des clans</h2>
         <label>
+          Vue points
+          <select id="score-scope">
+            <option value="global" selected>Global</option>
+            <option value="martial">Martial</option>
+            <option value="narrative">Narratif</option>
+          </select>
+        </label>
+        <label>
           Saison
           <select id="active-season"></select>
         </label>
@@ -39,12 +47,12 @@
       <h2>Visualisation des points</h2>
       <div class="charts-grid">
         <article class="chart-card">
-          <h3>Progression dans le temps (saison active)</h3>
+          <h3 id="season-progress-title">Progression dans le temps (saison active)</h3>
           <canvas id="season-progress-chart" width="960" height="380" aria-label="Graphique de progression saisonniere"></canvas>
         </article>
 
         <article class="chart-card">
-          <h3>Points globaux tous temps</h3>
+          <h3 id="global-points-title">Points globaux tous temps</h3>
           <canvas id="global-points-chart" width="960" height="380" aria-label="Graphique global des points"></canvas>
         </article>
       </div>
