@@ -77,6 +77,28 @@ Depuis le panneau admin:
 - cliquer `Exporter CSV`
 - ouvrir le fichier telecharge dans Excel ou LibreOffice
 
+## Import CSV (version rapide)
+
+Depuis le panneau admin:
+
+- cliquer `Importer CSV`
+- selectionner un fichier CSV au format exporte par le site
+- choisir le mode:
+  - `Fusionner`: ajoute/met a jour sans tout effacer
+  - `Remplacer`: ecrase les resultats actuels
+
+Utilisation recommandee:
+
+- exporter un CSV avant update
+- deployer la nouvelle version
+- importer le CSV pour restaurer les resultats
+
+## Persistance du mot de passe admin
+
+- Le mot de passe admin est conserve dans:
+  - `localStorage` (fallback)
+  - IndexedDB (`kinshima-results-db` / store `settings`) pour une meilleure resilience apres mise a jour
+
 ---
 
 Copyright Kinshima 2026

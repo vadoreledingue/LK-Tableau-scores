@@ -1,8 +1,10 @@
 (function () {
   const RESULTS_DB_NAME = "kinshima-results-db";
   const RESULTS_STORE_NAME = "results";
+  const SETTINGS_STORE_NAME = "settings";
   const RESULTS_FALLBACK_KEY = "kinshima-results-fallback-v1";
   const MIGRATION_MARKER_KEY = "kinshima-results-db-migrated-v1";
+  const ADMIN_SECURITY_KEY = "admin-security";
 
   let resultsDbPromise = null;
 
@@ -34,6 +36,39 @@
     const normalized = (Array.isArray(entries) ? entries : []).map((entry) => normalize(entry));
     await saveEntriesToDatabase(normalized);
     return normalized;
+  }
+
+  async function loadAdminSecurity() {
+    if (typeof indexedDB === "undefined") return null;
+    try {
+      const db = await getResultsDb();
+      return await new Promise((resolve, reject) => {
+        const tx = db.transaction(SETTINGS_STORE_NAME, "readonly");
+        const store = tx.objectStore(SETTINGS_STORE_NAME);
+        const request = store.get(ADMIN_SECURITY_KEY);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error || new Error("db-read-admin-security-error"));
+      });
+    } catch {
+      return null;
+    }
+  }
+
+  async function saveAdminSecurity(securityState) {
+    if (typeof indexedDB === "undefined") return;
+    try {
+      const db = await getResultsDb();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(SETTINGS_STORE_NAME, "readwrite");
+        const store = tx.objectStore(SETTINGS_STORE_NAME);
+        store.put(securityState, ADMIN_SECURITY_KEY);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error || new Error("db-write-admin-security-error"));
+        tx.onabort = () => reject(tx.error || new Error("db-admin-security-abort"));
+      });
+    } catch {
+      // ignore: localStorage fallback is still used by the app
+    }
   }
 
   async function loadEntriesFromDatabase() {
@@ -82,6 +117,9 @@
           if (!db.objectStoreNames.contains(RESULTS_STORE_NAME)) {
             db.createObjectStore(RESULTS_STORE_NAME);
           }
+          if (!db.objectStoreNames.contains(SETTINGS_STORE_NAME)) {
+            db.createObjectStore(SETTINGS_STORE_NAME);
+          }
         };
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error || new Error("db-open-error"));
@@ -107,6 +145,8 @@
 
   window.KinshimaResultsDB = {
     bootstrapEntriesStorage,
-    persistEntries
+    persistEntries,
+    loadAdminSecurity,
+    saveAdminSecurity
   };
 })();

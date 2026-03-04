@@ -186,7 +186,18 @@
         <section class="admin-card admin-results-panel">
           <div class="panel-head">
             <h3>Gestion des resultats individuels</h3>
-            <button id="admin-results-export-csv" type="button">Exporter CSV</button>
+            <div class="actions">
+              <label>
+                Mode import
+                <select id="admin-results-import-mode">
+                  <option value="merge" selected>Fusionner</option>
+                  <option value="replace">Remplacer</option>
+                </select>
+              </label>
+              <button id="admin-results-import-csv" type="button">Importer CSV</button>
+              <button id="admin-results-export-csv" type="button">Exporter CSV</button>
+              <input id="admin-results-import-file" type="file" accept=".csv,text/csv" class="hidden" />
+            </div>
           </div>
           <p class="note">Edition et suppression apres saisie. Affichage pagine pour rester lisible.</p>
           <div class="admin-results-toolbar">
