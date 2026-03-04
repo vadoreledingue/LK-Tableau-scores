@@ -4,26 +4,27 @@ Site web interactif pour la competition martiale des clans de la Ligue Kinshima.
 
 ### Fichiers
 
-- `index.html` : interface publique (classement + historique)
-- `admin.html` : panneau admin sur page dediee
-- `styles.css` : theme inspire de l'univers Kinshima
-- `script.js` : logique scores/saisons/admin/equipes/categories/securite
+- `index.html` : page publique (classement, graphiques, historique)
+- `admin.html` : page admin dediee
+- `styles.css` : theme Kinshima et mise en page
+- `script.js` : logique metier (scores, saisons, graphes, admin, styles equipes)
 
 ### Fonctionnalites
 
-- Vue publique du classement et de l'historique
-- Panneau admin protege par mot de passe pour:
-  - Ajouter des scores
-  - Renommer un clan
-  - Ajouter un clan
-  - Supprimer un clan (bloque si des scores existent pour ce clan)
-  - Renommer une categorie
-  - Ajouter une categorie
-  - Supprimer une categorie (bloquee si des scores existent pour cette categorie)
-  - Changer le mot de passe admin
-- Protection anti brute-force: 5 erreurs consecutives bloquent la connexion pendant 5 minutes
+- Page principale plus lisible et plus elegante
+- Menu en haut avec lien admin discret
+- Lien admin aussi en bas de page (petit format)
+- Classement des clans par saison
+- Graphique de progression dans le temps (saison active)
+- Graphique global des points (toutes saisons)
+- Historique filtrable
+- Personnalisation equipe depuis admin:
+  - Couleur d'equipe
+  - Upload/remplacement de logo d'equipe
+  - Suppression du logo
+- Gestion admin des clans/categories (ajout, renommage, suppression protegee)
+- Protection anti brute-force: 5 erreurs consecutives -> blocage 5 minutes
 - Saisons au format `LK26`, `LK27`, `LK28`...
-- Lien externe vers `https://www.kinshima.com`
 - Donnees sauvegardees dans `localStorage`
 
 ### Mot de passe admin

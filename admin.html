@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -8,9 +8,14 @@
 </head>
 <body>
   <header class="hero">
+    <nav class="main-menu">
+      <a href="index.html" class="menu-item">Classement</a>
+      <a href="admin.html" class="menu-item active">Admin</a>
+    </nav>
+
     <p class="kicker">Ligue Kinshima</p>
     <h1>Panneau administration</h1>
-    <p class="subtitle">Gestion des scores, clans et categories de competition.</p>
+    <p class="subtitle">Gestion des scores, des clans, des categories et de l'identite visuelle.</p>
     <a class="kinshima-link" href="index.html">Retour a la page publique</a>
   </header>
 
@@ -107,6 +112,25 @@
               </label>
               <button type="submit" class="ghost">Supprimer clan</button>
             </form>
+
+            <form id="team-style-form" class="inline-form">
+              <label>
+                Clan a personnaliser
+                <select id="team-style-select"></select>
+              </label>
+              <label>
+                Couleur du clan
+                <input id="team-color-input" type="color" value="#3f6de0" />
+              </label>
+              <label>
+                Logo du clan
+                <input id="team-logo-input" type="file" accept="image/*" />
+              </label>
+              <div class="actions">
+                <button type="submit">Enregistrer style</button>
+                <button id="team-logo-remove" type="button" class="ghost">Retirer logo</button>
+              </div>
+            </form>
           </section>
 
           <section class="admin-card">
@@ -162,6 +186,11 @@
       </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>Ligue Kinshima</p>
+    <a class="tiny-admin-link" href="admin.html">admin</a>
+  </footer>
 
   <script src="script.js"></script>
 </body>

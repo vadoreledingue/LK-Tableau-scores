@@ -8,9 +8,14 @@
 </head>
 <body>
   <header class="hero">
+    <nav class="main-menu">
+      <a href="index.html" class="menu-item active">Classement</a>
+      <a href="admin.html" class="menu-item subtle">Admin</a>
+    </nav>
+
     <p class="kicker">Ligue Kinshima</p>
     <h1>Tableau des scores de competition martiale des clans</h1>
-    <p class="subtitle">Suivi des points par saison pour les clans de la Ligue Kinshima.</p>
+    <p class="subtitle">Classements, evolution des points et historique officiel des affrontements.</p>
     <a class="kinshima-link" href="https://www.kinshima.com" target="_blank" rel="noopener noreferrer">Visiter kinshima.com</a>
   </header>
 
@@ -19,8 +24,8 @@
       <div class="panel-head">
         <h2>Espace administration</h2>
       </div>
-      <p>La saisie des scores et la gestion des clans/categories se font sur une page dediee.</p>
-      <a class="kinshima-link" href="admin.html">Ouvrir le panneau admin</a>
+      <p>La saisie des scores et la gestion des clans/categories sont sur une page dediee.</p>
+      <a class="tiny-admin-link" href="admin.html">Acces admin</a>
     </section>
 
     <section class="panel ranking-panel">
@@ -36,6 +41,21 @@
           <thead id="ranking-head"></thead>
           <tbody id="ranking-body"></tbody>
         </table>
+      </div>
+    </section>
+
+    <section class="panel charts-panel">
+      <h2>Visualisation des points</h2>
+      <div class="charts-grid">
+        <article class="chart-card">
+          <h3>Progression dans le temps (saison active)</h3>
+          <canvas id="season-progress-chart" width="960" height="380" aria-label="Graphique de progression saisonniere"></canvas>
+        </article>
+
+        <article class="chart-card">
+          <h3>Points globaux tous temps</h3>
+          <canvas id="global-points-chart" width="960" height="380" aria-label="Graphique global des points"></canvas>
+        </article>
       </div>
     </section>
 
@@ -71,8 +91,12 @@
         </table>
       </div>
     </section>
-
   </main>
+
+  <footer class="site-footer">
+    <p>Ligue Kinshima</p>
+    <a class="tiny-admin-link" href="admin.html">admin</a>
+  </footer>
 
   <script src="script.js"></script>
 </body>
