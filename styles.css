@@ -1,0 +1,178 @@
+﻿:root {
+  --royal-blue: #0a3ea8;
+  --royal-blue-dark: #082f7e;
+  --gold: #f0c419;
+  --gold-soft: #ffd95a;
+  --ink: #0f1b33;
+  --paper: #f5f8ff;
+  --white: #ffffff;
+  --line: #d7e0f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at top left, #e7eeff 0%, #d6e3ff 38%, #c9dbff 100%);
+}
+
+.hero {
+  padding: 2.2rem 1rem 1.4rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
+  color: var(--white);
+  border-bottom: 4px solid var(--gold);
+}
+
+.hero h1 {
+  margin: 0;
+  letter-spacing: 0.4px;
+}
+
+.hero p {
+  margin-top: 0.5rem;
+  color: #e4ebff;
+}
+
+.layout {
+  width: min(1120px, 92vw);
+  margin: 1.4rem auto 2rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.panel {
+  background: var(--white);
+  border: 2px solid var(--royal-blue);
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 8px 24px rgba(8, 47, 126, 0.12);
+}
+
+h2 {
+  margin-top: 0;
+  color: var(--royal-blue-dark);
+  border-left: 6px solid var(--gold);
+  padding-left: 0.5rem;
+}
+
+form,
+.filters {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.season-bar {
+  margin-bottom: 0.8rem;
+  max-width: 260px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+input,
+select,
+button {
+  border: 1px solid #9db5ea;
+  border-radius: 8px;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.95rem;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  align-items: end;
+  gap: 0.6rem;
+}
+
+button {
+  cursor: pointer;
+  background: var(--royal-blue);
+  color: var(--white);
+  border: 1px solid var(--royal-blue);
+  font-weight: 700;
+}
+
+button:hover {
+  background: var(--royal-blue-dark);
+}
+
+button.ghost {
+  background: var(--gold);
+  color: #362800;
+  border-color: #cda210;
+}
+
+button.ghost:hover {
+  background: #dbb214;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.55rem 0.5rem;
+  text-align: left;
+}
+
+th {
+  background: #edf3ff;
+  color: var(--royal-blue-dark);
+}
+
+tbody tr:nth-child(odd) {
+  background: #fafcff;
+}
+
+tbody tr:hover {
+  background: #fff7db;
+}
+
+.empty {
+  color: #6b768f;
+  font-style: italic;
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: 1.5rem;
+  }
+
+  .panel {
+    padding: 0.85rem;
+  }
+
+  .season-bar {
+    max-width: 100%;
+  }
+
+  table {
+    min-width: 540px;
+  }
+}

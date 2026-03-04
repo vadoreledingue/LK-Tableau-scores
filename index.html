@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tableau des Scores - 5 Equipes</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Tableau des Scores Interactif</h1>
+    <p>5 equipes, 3 categories, plusieurs resultats par equipe et par saison.</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel form-panel">
+      <h2>Ajouter un resultat</h2>
+      <form id="score-form">
+        <label>
+          Saison
+          <input id="season" type="text" list="seasons-list" placeholder="Ex: 2025-2026" required />
+          <datalist id="seasons-list"></datalist>
+        </label>
+
+        <label>
+          Equipe
+          <select id="team" required></select>
+        </label>
+
+        <label>
+          Categorie
+          <select id="category" required></select>
+        </label>
+
+        <label>
+          Score
+          <input id="score" type="number" min="0" max="1000" required />
+        </label>
+
+        <label>
+          Adversaire / Note
+          <input id="opponent" type="text" maxlength="80" placeholder="Ex: Match contre Aigles" />
+        </label>
+
+        <label>
+          Date
+          <input id="date" type="date" required />
+        </label>
+
+        <div class="actions">
+          <button type="submit">Ajouter</button>
+          <button id="reset-data" type="button" class="ghost">Reinitialiser</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel ranking-panel">
+      <h2>Classement global</h2>
+      <div class="season-bar">
+        <label>
+          Saison du classement
+          <select id="active-season"></select>
+        </label>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Equipe</th>
+              <th>Cat. 1</th>
+              <th>Cat. 2</th>
+              <th>Cat. 3</th>
+              <th>Total</th>
+              <th>Moyenne</th>
+              <th>Entrees</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel history-panel">
+      <h2>Historique des resultats</h2>
+      <div class="filters">
+        <label>
+          Filtre saison
+          <select id="filter-season"></select>
+        </label>
+        <label>
+          Filtre equipe
+          <select id="filter-team"></select>
+        </label>
+        <label>
+          Filtre categorie
+          <select id="filter-category"></select>
+        </label>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Saison</th>
+              <th>Date</th>
+              <th>Equipe</th>
+              <th>Categorie</th>
+              <th>Score</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
