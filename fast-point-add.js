@@ -8,6 +8,8 @@
   const fastStageTitle = document.getElementById("fast-stage-title");
   const fastStageBack = document.getElementById("fast-stage-back");
   const fastStageProgress = document.getElementById("fast-stage-progress");
+  const fastStageHint = document.getElementById("fast-stage-hint");
+  const fastCurrentSelection = document.getElementById("fast-current-selection");
   const fastStageContent = document.getElementById("fast-stage-content");
   const fastLastEntry = document.getElementById("fast-last-entry");
 
@@ -86,7 +88,9 @@
       fastStageTitle.textContent = stage.id === "note" && teamOnlySwitchMode ? "Finaliser" : stage.title;
     }
     if (fastStageProgress) fastStageProgress.textContent = `${currentStage + 1}/${stages.length}`;
+    if (fastStageHint) fastStageHint.textContent = getStageHint(stage.id);
     if (fastStageBack) fastStageBack.classList.toggle("hidden", currentStage <= 0);
+    renderContextSummary();
     if (!fastStageContent) return;
 
     if (stage.id === "team") {
@@ -412,6 +416,28 @@
     }
     const last = state.entries[0];
     fastLastEntry.textContent = `Dernier ajout: ${last.team} +${last.score} (${last.category}, ${last.tag})`;
+  }
+
+  function renderContextSummary() {
+    if (!fastCurrentSelection) return;
+    const season = seasonInput?.value || "-";
+    const team = teamSelect?.value || "non choisi";
+    const category = categorySelect?.value || "non choisie";
+    const tag = tagSelect?.value || "non choisi";
+    const score = currentScore > 0 ? `+${currentScore}` : "0";
+    fastCurrentSelection.innerHTML = `<span class="fast-pill">Saison: ${escapeHtmlLocal(season)}</span><span class="fast-pill">Clan: ${escapeHtmlLocal(team)}</span><span class="fast-pill">Cat: ${escapeHtmlLocal(category)}</span><span class="fast-pill">Tag: ${escapeHtmlLocal(tag)}</span><span class="fast-pill">Score: ${escapeHtmlLocal(score)}</span>`;
+  }
+
+  function getStageHint(stageId) {
+    if (teamOnlySwitchMode && stageId === "team") {
+      return "Choisis uniquement un clan pour reutiliser la derniere config.";
+    }
+    if (stageId === "team") return "Etape 1: choisis un clan.";
+    if (stageId === "category") return "Etape 2: choisis une categorie.";
+    if (stageId === "tag") return "Etape 3: choisis un tag.";
+    if (stageId === "score") return "Etape 4: ajuste les points puis continue.";
+    if (teamOnlySwitchMode) return "Verification finale avant enregistrement.";
+    return "Etape 5: ajoute une note puis valide.";
   }
 
   function getSelectValues(selectElement) {
