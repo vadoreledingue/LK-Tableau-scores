@@ -61,6 +61,11 @@
               </label>
 
               <label>
+                Tag evenement
+                <select id="tag" required></select>
+              </label>
+
+              <label>
                 Score
                 <input id="score" type="number" min="0" max="1000" required />
               </label>
@@ -166,6 +171,38 @@
           </section>
 
           <section class="admin-card">
+            <h3>Tags d'evenement</h3>
+            <p class="note">Ex: Compette de sumo, Coupe royale, Tournoi interne.</p>
+            <form id="tag-rename-form" class="inline-form">
+              <label>
+                Tag existant
+                <select id="tag-rename-select"></select>
+              </label>
+              <label>
+                Nouveau nom
+                <input id="tag-rename-input" type="text" maxlength="50" required />
+              </label>
+              <button type="submit">Renommer</button>
+            </form>
+
+            <form id="tag-add-form" class="inline-form">
+              <label>
+                Ajouter un tag
+                <input id="tag-add-input" type="text" maxlength="50" placeholder="Ex: Compette de sumo" required />
+              </label>
+              <button type="submit">Ajouter tag</button>
+            </form>
+
+            <form id="tag-delete-form" class="inline-form">
+              <label>
+                Supprimer un tag
+                <select id="tag-delete-select"></select>
+              </label>
+              <button type="submit" class="ghost">Supprimer tag</button>
+            </form>
+          </section>
+
+          <section class="admin-card">
             <h3>Securite admin</h3>
             <form id="admin-password-change-form" class="inline-form">
               <label>
@@ -227,6 +264,7 @@
                   <th>Saison</th>
                   <th>Clan</th>
                   <th>Categorie</th>
+                  <th>Tag</th>
                   <th>Score</th>
                   <th>Note</th>
                   <th>Actions</th>
