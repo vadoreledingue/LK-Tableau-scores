@@ -122,8 +122,18 @@ flowchart TD
 
 ## Demarrage
 
+Mode local sans API (donnees locales uniquement):
+
 1. Ouvrir `index.html`.
 2. Aller sur `admin.html` via le lien en bas de page pour la gestion.
+
+Mode partage multi-utilisateurs (recommande):
+
+1. Lancer le serveur Node:
+   - `node server.js`
+2. Ouvrir:
+   - `http://localhost:8080/`
+3. Tous les utilisateurs doivent passer par le meme serveur (meme URL/host).
 
 - `cd /var/www/kinshima`
 - `sudo git pull`
@@ -175,6 +185,23 @@ Utilisation recommandee:
   - le front tente `GET/PUT /api/admin-password`
   - format attendu: `{ "password": "votre-mot-de-passe" }`
   - si l'API n'existe pas, la mise a jour reste locale au navigateur
+
+## API multi-utilisateurs
+
+Le repo inclut un backend `server.js` (Node natif, sans dependances) avec:
+
+- `GET /api/results`
+  - retourne: `{ "entries": [...], "teams": [...], "categories": [...], "tags": [...], "teamStyles": {...} }`
+- `PUT /api/results`
+  - accepte les memes champs pour synchroniser scores + taxonomie globale
+- `GET /api/admin-password`
+  - retourne: `{ "password": "..." }`
+- `PUT /api/admin-password`
+  - accepte: `{ "password": "..." }`
+
+Stockage serveur:
+
+- fichier: `data/shared-state.json`
 
 ---
 
