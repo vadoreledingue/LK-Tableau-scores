@@ -91,9 +91,7 @@ flowchart TD
 ## Stack et Donnees
 
 - UI: `HTML`, `CSS`, `JavaScript` vanilla
-- Resultats: `IndexedDB` via `db.js`
-  - base: `kinshima-results-db`
-  - store: `results`
+- Resultats: **source unique serveur** (`data/shared-state.json` via `server.js`)
 - Config applicative (hors resultats): `localStorage`
   - clans
   - categories
@@ -191,9 +189,11 @@ Utilisation recommandee:
 Le repo inclut un backend `server.js` (Node natif, sans dependances) avec:
 
 - `GET /api/results`
-  - retourne: `{ "entries": [...], "teams": [...], "categories": [...], "tags": [...], "teamStyles": {...} }`
+  - retourne: `{ "entries": [...], "teams": [...], "categories": [...], "tags": [...], "teamStyles": {...}, "revision": 12, "updatedAt": "2026-03-05T12:00:00.000Z" }`
 - `PUT /api/results`
   - accepte les memes champs pour synchroniser scores + taxonomie globale
+  - accepte aussi `revision` (optimistic locking)
+  - en cas de conflit de revision: `409 { "error": "revision-conflict", "currentRevision": ... }`
 - `GET /api/admin-password`
   - retourne: `{ "password": "..." }`
 - `PUT /api/admin-password`
@@ -202,6 +202,7 @@ Le repo inclut un backend `server.js` (Node natif, sans dependances) avec:
 Stockage serveur:
 
 - fichier: `data/shared-state.json`
+- ecritures serializees cote serveur pour eviter les collisions inter-instances
 
 ---
 

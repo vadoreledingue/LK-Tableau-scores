@@ -31,8 +31,12 @@ const DEFAULT_SHARED_STATE = {
   categories: [],
   tags: [],
   teamStyles: {},
-  adminPassword: "Kinshima-Admin-2026"
+  adminPassword: "Kinshima-Admin-2026",
+  revision: 0,
+  updatedAt: null
 };
+
+let stateWriteQueue = Promise.resolve();
 
 async function ensureStateFile() {
   await fsp.mkdir(DATA_DIR, { recursive: true });
@@ -97,7 +101,9 @@ function normalizeState(input) {
     teamStyles: state.teamStyles && typeof state.teamStyles === "object" ? state.teamStyles : {},
     adminPassword: typeof state.adminPassword === "string" && state.adminPassword.trim()
       ? state.adminPassword.trim()
-      : DEFAULT_SHARED_STATE.adminPassword
+      : DEFAULT_SHARED_STATE.adminPassword,
+    revision: Number.isInteger(state.revision) && state.revision >= 0 ? state.revision : 0,
+    updatedAt: typeof state.updatedAt === "string" ? state.updatedAt : null
   };
 }
 
@@ -111,6 +117,12 @@ async function writeState(nextState) {
   const normalized = normalizeState(nextState);
   await writeJsonFile(STATE_FILE, normalized);
   return normalized;
+}
+
+function withStateWriteLock(task) {
+  const run = stateWriteQueue.then(task, task);
+  stateWriteQueue = run.catch(() => {});
+  return run;
 }
 
 async function handleApi(req, res, pathname) {
@@ -132,7 +144,9 @@ async function handleApi(req, res, pathname) {
         teams: state.teams,
         categories: state.categories,
         tags: state.tags,
-        teamStyles: state.teamStyles
+        teamStyles: state.teamStyles,
+        revision: state.revision,
+        updatedAt: state.updatedAt
       });
       return;
     }
@@ -144,23 +158,49 @@ async function handleApi(req, res, pathname) {
         sendJson(res, 400, { error: String(error.message || "invalid-json") });
         return;
       }
-      const current = await readState();
-      const merged = {
-        ...current,
-        entries: Array.isArray(body.entries) ? body.entries : current.entries,
-        teams: Array.isArray(body.teams) ? body.teams : current.teams,
-        categories: Array.isArray(body.categories) ? body.categories : current.categories,
-        tags: Array.isArray(body.tags) ? body.tags : current.tags,
-        teamStyles: body.teamStyles && typeof body.teamStyles === "object" ? body.teamStyles : current.teamStyles
-      };
-      const saved = await writeState(merged);
+      const saved = await withStateWriteLock(async () => {
+        const current = await readState();
+        const hasExpectedRevision = Object.prototype.hasOwnProperty.call(body, "revision");
+        const expectedRevision = Number(body.revision);
+        if (hasExpectedRevision && (!Number.isInteger(expectedRevision) || expectedRevision !== current.revision)) {
+          const error = new Error("revision-conflict");
+          error.code = "revision-conflict";
+          error.currentRevision = current.revision;
+          throw error;
+        }
+        const merged = {
+          ...current,
+          entries: Array.isArray(body.entries) ? body.entries : current.entries,
+          teams: Array.isArray(body.teams) ? body.teams : current.teams,
+          categories: Array.isArray(body.categories) ? body.categories : current.categories,
+          tags: Array.isArray(body.tags) ? body.tags : current.tags,
+          teamStyles: body.teamStyles && typeof body.teamStyles === "object" ? body.teamStyles : current.teamStyles,
+          revision: current.revision + 1,
+          updatedAt: new Date().toISOString()
+        };
+        return writeState(merged);
+      }).catch((error) => {
+        if (error && error.code === "revision-conflict") {
+          sendJson(res, 409, {
+            error: "revision-conflict",
+            currentRevision: error.currentRevision
+          });
+          return null;
+        }
+        throw error;
+      });
+      if (!saved) {
+        return;
+      }
       sendJson(res, 200, {
         ok: true,
         entries: saved.entries,
         teams: saved.teams,
         categories: saved.categories,
         tags: saved.tags,
-        teamStyles: saved.teamStyles
+        teamStyles: saved.teamStyles,
+        revision: saved.revision,
+        updatedAt: saved.updatedAt
       });
       return;
     }
