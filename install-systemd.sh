@@ -11,6 +11,11 @@ if [[ "${EUID}" -ne 0 ]]; then
   exit 1
 fi
 
+if [[ ! -d "${PROJECT_DIR}/node_modules/better-sqlite3" ]]; then
+  echo "Installation des dependances npm..."
+  (cd "$PROJECT_DIR" && npm install --omit=dev)
+fi
+
 cat > "$TARGET_FILE" <<EOF
 [Unit]
 Description=Kinshima web + API server

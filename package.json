@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Ligue Kinshima - serveur web + API",
+  "dependencies": {
+    "better-sqlite3": "^11.9.1"
+  },
   "scripts": {
     "start": "node server.js",
     "start:daemon": "powershell -ExecutionPolicy Bypass -File ./start-server.ps1",

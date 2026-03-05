@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 RESTART_DELAY_SECONDS="${RESTART_DELAY_SECONDS:-2}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -15,8 +15,11 @@ echo "Script: $SERVER_SCRIPT"
 
 while true; do
   echo "Lancement Node..."
-  node "$SERVER_SCRIPT"
-  EXIT_CODE="$?"
+  if node "$SERVER_SCRIPT"; then
+    EXIT_CODE=0
+  else
+    EXIT_CODE=$?
+  fi
 
   if [[ "$EXIT_CODE" -eq 0 ]]; then
     echo "Serveur arrete normalement (code 0)."

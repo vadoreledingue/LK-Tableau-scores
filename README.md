@@ -91,7 +91,7 @@ flowchart TD
 ## Stack et Donnees
 
 - UI: `HTML`, `CSS`, `JavaScript` vanilla
-- Resultats: **source unique serveur** (`data/shared-state.json` via `server.js`)
+- Base centralisee SQL: `SQLite` (`data/kinshima.sqlite` via `server.js`)
 - Config applicative (hors resultats): `localStorage`
   - clans
   - categories
@@ -128,10 +128,13 @@ Mode local sans API (donnees locales uniquement):
 Mode partage multi-utilisateurs (recommande):
 
 1. Lancer le serveur Node:
+   - `npm install`
    - `node server.js`
 2. Ouvrir:
    - `http://localhost:3000/`
 3. Tous les utilisateurs doivent passer par le meme serveur (meme URL/host).
+4. Migration auto:
+   - au premier demarrage, si `data/shared-state.json` existe, les donnees sont migrees vers SQLite.
 
 Mode "reste actif" (superviseur, Windows):
 
@@ -224,8 +227,9 @@ Le repo inclut un backend `server.js` (Node natif, sans dependances) avec:
 
 Stockage serveur:
 
-- fichier: `data/shared-state.json`
-- ecritures serializees cote serveur pour eviter les collisions inter-instances
+- fichier SQL: `data/kinshima.sqlite`
+- migration auto depuis `data/shared-state.json` au premier demarrage
+- transactions SQLite + controle `revision` pour eviter les collisions inter-instances
 
 ---
 
