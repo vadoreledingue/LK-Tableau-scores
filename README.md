@@ -130,7 +130,7 @@ Mode partage multi-utilisateurs (recommande):
 1. Lancer le serveur Node:
    - `node server.js`
 2. Ouvrir:
-   - `http://localhost:8080/`
+   - `http://localhost:3000/`
 3. Tous les utilisateurs doivent passer par le meme serveur (meme URL/host).
 
 - `cd /var/www/kinshima`
