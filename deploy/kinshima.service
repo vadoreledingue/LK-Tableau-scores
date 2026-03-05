@@ -1,0 +1,18 @@
+[Unit]
+Description=Kinshima web + API server
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/first-site-web-vld
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/env bash /home/pi/first-site-web-vld/start-server.sh
+Restart=always
+RestartSec=2
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

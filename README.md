@@ -133,8 +133,31 @@ Mode partage multi-utilisateurs (recommande):
    - `http://localhost:3000/`
 3. Tous les utilisateurs doivent passer par le meme serveur (meme URL/host).
 
-- `cd /var/www/kinshima`
-- `sudo git pull`
+Mode "reste actif" (superviseur, Windows):
+
+1. Double-cliquer `start-server.cmd`
+   - ou lancer `powershell -ExecutionPolicy Bypass -File .\start-server.ps1`
+2. Le script redemarre automatiquement `server.js` si Node plante.
+3. Tant que cette session est ouverte, le serveur web et l'API restent en ligne ensemble.
+
+Mode "serveur Linux / Raspberry Pi" (recommande en production):
+
+1. Rendre executables les scripts:
+   - `chmod +x start-server.sh install-systemd.sh`
+2. Tester le mode supervise local Linux:
+   - `./start-server.sh`
+3. Installer comme service systemd (auto demarrage au boot + restart auto):
+   - `sudo ./install-systemd.sh`
+4. Verifier le service:
+   - `sudo systemctl status kinshima.service`
+5. Voir les logs:
+   - `sudo journalctl -u kinshima.service -f`
+
+Mise a jour serveur Linux:
+
+1. `cd /var/www/kinshima`
+2. `sudo git pull`
+3. `sudo systemctl restart kinshima.service`
 
 ---
 

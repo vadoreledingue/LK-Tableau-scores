@@ -1,0 +1,11 @@
+{
+  "name": "kinshima-scoreboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ligue Kinshima - serveur web + API",
+  "scripts": {
+    "start": "node server.js",
+    "start:daemon": "powershell -ExecutionPolicy Bypass -File ./start-server.ps1",
+    "start:daemon:linux": "bash ./start-server.sh"
+  }
+}
