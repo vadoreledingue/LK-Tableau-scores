@@ -82,7 +82,9 @@
 
   function renderStage() {
     const stage = stages[currentStage] || stages[0];
-    if (fastStageTitle) fastStageTitle.textContent = stage.title;
+    if (fastStageTitle) {
+      fastStageTitle.textContent = stage.id === "note" && teamOnlySwitchMode ? "Finaliser" : stage.title;
+    }
     if (fastStageProgress) fastStageProgress.textContent = `${currentStage + 1}/${stages.length}`;
     if (fastStageBack) fastStageBack.classList.toggle("hidden", currentStage <= 0);
     if (!fastStageContent) return;
@@ -108,10 +110,12 @@
 
   function renderTeamStage() {
     const teams = getSelectValues(teamSelect);
+    const canSwitchOnly = Boolean(categorySelect?.value && tagSelect?.value && currentScore > 0);
     const modeLabel = teamOnlySwitchMode
       ? '<p class="note">Mode actif: changement de clan uniquement.</p>'
       : "";
-    return `${modeLabel}<div class="fast-grid">${teams
+    const modeButton = `<div class="fast-stage-actions"><button type="button" class="ghost" data-action="switch-team-only"${canSwitchOnly ? "" : " disabled"}>Activer: changer clan seulement</button></div>`;
+    return `${modeLabel}${modeButton}<div class="fast-grid">${teams
       .map((team) => renderTeamButton(team, team === teamSelect?.value))
       .join("")}</div>`;
   }
@@ -163,6 +167,22 @@
   }
 
   function renderNoteStage() {
+    if (teamOnlySwitchMode) {
+      const summaryTeam = teamSelect?.value || "Clan non defini";
+      const summaryCategory = categorySelect?.value || "Categorie non definie";
+      const summaryTag = tagSelect?.value || "Tag non defini";
+      return `<div class="fast-col">
+        <h4>Resume</h4>
+        <p class="note">Clan: ${escapeHtmlLocal(summaryTeam)}</p>
+        <p class="note">Categorie: ${escapeHtmlLocal(summaryCategory)}</p>
+        <p class="note">Tag: ${escapeHtmlLocal(summaryTag)}</p>
+        <p class="note">Score: +${currentScore}</p>
+      </div>
+      <div class="fast-stage-actions">
+        <button type="button" class="fast-submit" data-action="submit-team-only">Finaliser et ajouter le score</button>
+      </div>`;
+    }
+
     const presets = notePresets
       .map((note) => `<button type="button" data-action="note-preset" data-note="${escapeAttrLocal(note)}">${escapeHtmlLocal(note)}</button>`)
       .join("");
@@ -175,6 +195,7 @@
     </label>
     <div class="fast-stage-actions">
       <button type="button" class="ghost" data-action="switch-team-only">Changer clan seulement</button>
+      <button type="button" data-action="submit-switch-clan">Ajouter et changer clan</button>
       <button type="button" class="fast-submit" data-action="submit">Ajouter +${currentScore} (${escapeHtmlLocal(team)} / ${escapeHtmlLocal(category)})</button>
     </div>`;
   }
@@ -230,8 +251,16 @@
       renderStage();
       return;
     }
+    if (action === "submit-team-only") {
+      submitFastScore({ keepLastEntry: true });
+      return;
+    }
     if (action === "submit") {
-      submitFastScore();
+      submitFastScore({ keepLastEntry: false });
+      return;
+    }
+    if (action === "submit-switch-clan") {
+      submitFastScore({ keepLastEntry: true });
     }
   }
 
@@ -246,7 +275,6 @@
     if (stageId === "team" && teamSelect) {
       teamSelect.value = value;
       if (teamOnlySwitchMode) {
-        teamOnlySwitchMode = false;
         currentStage = 4;
       } else {
         currentStage = 1;
@@ -289,7 +317,8 @@
     renderStage();
   }
 
-  function submitFastScore() {
+  function submitFastScore(options = {}) {
+    const keepLastEntry = Boolean(options.keepLastEntry);
     if (typeof isAdmin === "function" && !isAdmin()) {
       showFastFeedback("Session admin inactive. Reconnecte-toi.", "error");
       return;
@@ -317,14 +346,20 @@
     }
 
     window.setTimeout(() => {
-      currentScore = 0;
-      scoreInput.value = "0";
-      noteInput.value = "";
-      teamOnlySwitchMode = false;
-      currentStage = 0;
-      if (teamSelect) teamSelect.value = "";
-      if (categorySelect) categorySelect.value = "";
-      if (tagSelect) tagSelect.value = "";
+      if (keepLastEntry) {
+        teamOnlySwitchMode = true;
+        currentStage = 0;
+        if (teamSelect) teamSelect.value = "";
+      } else {
+        currentScore = 0;
+        scoreInput.value = "0";
+        noteInput.value = "";
+        teamOnlySwitchMode = false;
+        currentStage = 0;
+        if (teamSelect) teamSelect.value = "";
+        if (categorySelect) categorySelect.value = "";
+        if (tagSelect) tagSelect.value = "";
+      }
       renderStage();
       renderLastEntry();
     }, 90);
