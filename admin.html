@@ -44,9 +44,10 @@
         <section class="admin-score-zone">
           <section class="admin-card admin-score-card">
             <h3>Saisir un score</h3>
+            <p class="note score-help">Renseigne les champs, puis enchaine rapidement les ajouts.</p>
             <form id="score-form">
               <label>
-                Saison (format LKxx)
+                Saison
                 <input id="season" type="text" list="seasons-list" placeholder="Ex: LK26" required />
                 <datalist id="seasons-list"></datalist>
               </label>
@@ -81,12 +82,16 @@
                 <input id="occurred-at" type="datetime-local" step="60" required />
               </label>
 
-              <div class="actions">
-                <button type="submit">Ajouter</button>
+              <div class="actions score-submit-row">
+                <button type="submit" class="score-submit-btn">Ajouter le score</button>
               </div>
             </form>
           </section>
         </section>
+
+        <div class="admin-separator" aria-hidden="true">
+          <span>Gestion avancee</span>
+        </div>
 
         <div class="admin-grid">
 

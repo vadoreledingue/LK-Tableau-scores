@@ -280,25 +280,28 @@ form,
 
 .admin-score-card {
   margin-bottom: 0.9rem;
-  border: 1px solid rgba(231, 191, 90, 0.58);
-  box-shadow: 0 0 0 1px rgba(231, 191, 90, 0.22), 0 10px 24px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(231, 191, 90, 0.72);
+  box-shadow: 0 0 0 1px rgba(231, 191, 90, 0.28), 0 14px 30px rgba(0, 0, 0, 0.34);
   background:
-    linear-gradient(180deg, rgba(231, 191, 90, 0.12), rgba(255, 255, 255, 0.02)),
-    rgba(8, 14, 30, 0.74);
+    linear-gradient(180deg, rgba(231, 191, 90, 0.18), rgba(255, 255, 255, 0.02)),
+    rgba(8, 14, 30, 0.8);
+  padding: 1rem;
 }
 
 .admin-score-card #score-form {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
 }
 
 .admin-score-card h3 {
   color: #ffe7a3;
+  margin-bottom: 0.35rem;
 }
 
 .admin-score-zone {
   position: relative;
-  margin-bottom: 1.3rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.6rem;
+  padding: 0.35rem 0 1.15rem;
 }
 
 .admin-score-zone::after {
@@ -309,6 +312,48 @@ form,
   bottom: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(231, 191, 90, 0.68) 18%, rgba(231, 191, 90, 0.68) 82%, transparent 100%);
+}
+
+.score-help {
+  margin: 0 0 0.7rem;
+  color: #d7e1ff;
+}
+
+.score-submit-row {
+  grid-column: 1 / -1;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+.score-submit-btn {
+  min-width: 260px;
+  min-height: 52px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.01rem;
+  border: 1px solid rgba(231, 191, 90, 0.72);
+  box-shadow: 0 8px 20px rgba(12, 22, 52, 0.48);
+}
+
+.admin-separator {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0.05rem 0 0.95rem;
+  color: #f3ddb1;
+  font-size: 0.78rem;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+}
+
+.admin-separator::before,
+.admin-separator::after {
+  content: "";
+  height: 1px;
+  background: rgba(231, 191, 90, 0.45);
+  flex: 1;
 }
 
 .admin-card,
@@ -549,6 +594,12 @@ tbody tr:hover {
   .admin-score-zone {
     margin-bottom: 1rem;
     padding-bottom: 0.8rem;
+  }
+
+  .score-submit-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
   }
 
   .admin-results-toolbar {

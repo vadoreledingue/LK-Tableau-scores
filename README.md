@@ -25,18 +25,20 @@
 
 - Page publique `index.html`:
   - classement par saison
+  - filtres principaux: saison, categorie, tag
   - visualisation des points
   - historique filtrable
 - Page admin `admin.html`:
   - saisie des resultats
-  - gestion des clans et categories
+  - conservation des parametres de la derniere saisie (saison/clan/categorie/tag)
+  - gestion des clans, categories et tags
   - gestion individuelle des resultats (modifier/supprimer)
   - pagination des resultats
   - export CSV (Excel compatible)
 
 ---
 
-## Structure Categories / Sous-categories
+## Structure Categories / Tags
 
 - `Categorie martiale`:
   - `Petits`
@@ -50,12 +52,18 @@
   - `Craft`
   - `Duel`
   - `Hugen`
+- `Tags d'evenement` (exemples):
+  - `Compette de sumo`
+  - `Competition generale`
+  - `Campagne narrative`
+  - `Tournoi interne`
 
 Schema Mermaid (compatible GitHub):
 
 ```mermaid
 flowchart TD
     A[Ligue Kinshima] --> C[Categories]
+    A --> T[Tags evenements]
     C --> C1[Martiales]
     C --> C2[Narratives]
 
@@ -70,6 +78,10 @@ flowchart TD
     C2 --> N3[Craft]
     C2 --> N4[Duel]
     C2 --> N5[Hugen]
+
+    T --> T1[Compette de sumo]
+    T --> T2[Competition generale]
+    T --> T3[Campagne narrative]
 ```
 
 ---
@@ -83,6 +95,10 @@ flowchart TD
   - base: `kinshima-results-db`
   - store: `results`
 - Config applicative (hors resultats): `localStorage`
+  - clans
+  - categories
+  - tags
+  - styles visuels des clans
 
 ---
 
@@ -122,6 +138,17 @@ Depuis le panneau admin:
 - cliquer `Exporter CSV`
 - ouvrir le fichier telecharge dans Excel ou LibreOffice
 
+Colonnes exportees:
+
+- `id`
+- `occurredAt`
+- `season`
+- `team`
+- `category`
+- `tag`
+- `score`
+- `note`
+
 ## Import CSV (version rapide)
 
 Depuis le panneau admin:
@@ -131,6 +158,7 @@ Depuis le panneau admin:
 - choisir le mode:
   - `Fusionner`: ajoute/met a jour sans tout effacer
   - `Remplacer`: ecrase les resultats actuels
+- si la colonne `tag` est absente, le tag par defaut est applique automatiquement
 
 Utilisation recommandee:
 
