@@ -7,7 +7,7 @@ const path = require("path");
 const { URL } = require("url");
 
 const HOST = process.env.HOST || "0.0.0.0";
-const PORT = Number(process.env.PORT || 8080);
+const PORT = Number(process.env.PORT || 3000);
 const ROOT_DIR = process.cwd();
 const DATA_DIR = path.join(ROOT_DIR, "data");
 const STATE_FILE = path.join(DATA_DIR, "shared-state.json");
