@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ligue Kinshima - Fast point add</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="fast-point-add-page">
+  <header class="hero">
+    <nav class="main-menu">
+      <a href="index.html" class="menu-item">Classement</a>
+      <a href="admin.html" class="menu-item">Admin</a>
+      <a href="fast-point-add.html" class="menu-item active">Fast point add</a>
+    </nav>
+
+    <p class="kicker">Ligue Kinshima</p>
+    <h1>Fast point add</h1>
+    <p class="subtitle">Ajout de score rapide par boutons interactifs, optimise mobile.</p>
+    <a class="kinshima-link" href="admin.html">Retour au panneau admin</a>
+  </header>
+
+  <main class="layout">
+    <section class="panel admin-panel fast-add-panel">
+      <div class="panel-head">
+        <h2>Ajout rapide</h2>
+        <button id="admin-logout" type="button" class="ghost hidden">Verrouiller</button>
+      </div>
+
+      <div id="admin-locked" class="admin-lock">
+        <p>Acces reserve aux organisateurs de la Ligue.</p>
+        <form id="admin-login-form" class="inline-form">
+          <label>
+            Mot de passe
+            <input id="admin-password" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Deverrouiller</button>
+        </form>
+        <p id="admin-lock-info" class="note">5 erreurs consecutives bloquent l'acces pendant 5 minutes.</p>
+        <p id="admin-login-error" class="error hidden">Mot de passe invalide.</p>
+      </div>
+
+      <div id="admin-unlocked" class="hidden">
+        <p id="admin-feedback" class="feedback hidden"></p>
+
+        <section class="fast-add-shell">
+          <div class="fast-season-row">
+            <button id="fast-season-prev" type="button" class="ghost">-1</button>
+            <label class="fast-season-input-wrap">
+              Saison
+              <input id="fast-season-input" type="text" value="LK26" maxlength="4" />
+            </label>
+            <button id="fast-season-next" type="button">+1</button>
+          </div>
+
+          <section class="fast-group">
+            <div class="fast-stage-head">
+              <h3 id="fast-stage-title">Clan</h3>
+              <button id="fast-stage-back" type="button" class="ghost hidden">Retour</button>
+            </div>
+            <p id="fast-stage-progress" class="note">1/3</p>
+            <div id="fast-stage-content" class="fast-stage-content"></div>
+          </section>
+          <p id="fast-last-entry" class="note"></p>
+        </section>
+
+        <form id="score-form" class="fast-form-bridge" aria-hidden="true">
+          <input id="season" type="text" list="seasons-list" />
+          <datalist id="seasons-list"></datalist>
+          <select id="team"></select>
+          <select id="category"></select>
+          <select id="tag"></select>
+          <input id="score" type="number" min="0" max="1000" />
+          <input id="note" type="text" maxlength="80" />
+          <input id="occurred-at" type="datetime-local" step="60" />
+          <button type="submit">submit</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Copyright Kinshima 2026</p>
+    <a class="tiny-admin-link" href="admin.html">admin</a>
+  </footer>
+
+  <script src="db.js"></script>
+  <script src="script.js"></script>
+  <script src="fast-point-add.js"></script>
+</body>
+</html>
