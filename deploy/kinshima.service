@@ -8,7 +8,7 @@ User=pi
 WorkingDirectory=/home/pi/first-site-web-vld
 Environment=NODE_ENV=production
 Environment=PORT=3000
-ExecStart=/usr/bin/env bash /home/pi/first-site-web-vld/start-server.sh
+ExecStart=/usr/bin/env bash /home/pi/first-site-web-vld/scripts/start-server.sh
 Restart=always
 RestartSec=2
 StandardOutput=journal

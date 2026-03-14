@@ -3,7 +3,7 @@ set -uo pipefail
 
 RESTART_DELAY_SECONDS="${RESTART_DELAY_SECONDS:-2}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SERVER_SCRIPT="$SCRIPT_DIR/server.js"
+SERVER_SCRIPT="$SCRIPT_DIR/../src/server.js"
 
 if [[ ! -f "$SERVER_SCRIPT" ]]; then
   echo "Fichier introuvable: $SERVER_SCRIPT" >&2

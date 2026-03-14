@@ -7,8 +7,9 @@
     "better-sqlite3": "^11.9.1"
   },
   "scripts": {
-    "start": "node server.js",
-    "start:daemon": "powershell -ExecutionPolicy Bypass -File ./start-server.ps1",
-    "start:daemon:linux": "bash ./start-server.sh"
+    "start": "node src/server.js",
+    "start:compat": "node server.js",
+    "start:daemon": "powershell -ExecutionPolicy Bypass -File ./scripts/start-server.ps1",
+    "start:daemon:linux": "bash ./scripts/start-server.sh"
   }
 }
