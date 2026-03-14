@@ -3,12 +3,12 @@
 ## Tableau des Scores des Clans
 
 <p align="center">
-  <img src="logos/Alphanos.png" alt="Alphanos" width="42" />
-  <img src="logos/Arturok.png" alt="Arturok" width="42" />
-  <img src="logos/Bragnir.png" alt="Bragnir" width="42" />
-  <img src="logos/O-Tsuyujin.png" alt="O-Tsuyujin" width="42" />
-  <img src="logos/Seklan.png" alt="Seklan" width="42" />
-  <img src="logos/Son-Enma.png" alt="Son-Enma" width="42" />
+  <img src="public/logos/Alphanos.png" alt="Alphanos" width="42" />
+  <img src="public/logos/Arturok.png" alt="Arturok" width="42" />
+  <img src="public/logos/Bragnir.png" alt="Bragnir" width="42" />
+  <img src="public/logos/O-Tsuyujin.png" alt="O-Tsuyujin" width="42" />
+  <img src="public/logos/Seklan.png" alt="Seklan" width="42" />
+  <img src="public/logos/Son-Enma.png" alt="Son-Enma" width="42" />
 </p>
 
 <p align="center">
@@ -91,7 +91,7 @@ flowchart TD
 ## Stack et Donnees
 
 - UI: `HTML`, `CSS`, `JavaScript` vanilla
-- Base centralisee SQL: `SQLite` (`data/kinshima.sqlite` via `server.js`)
+- Base centralisee SQL: `SQLite` (`data/kinshima.sqlite` via `src/server.js`)
 - Config applicative (hors resultats): `localStorage`
   - clans
   - categories
@@ -102,12 +102,14 @@ flowchart TD
 
 ## Structure
 
-- `index.html`: vue publique
-- `admin.html`: panneau admin
-- `styles.css`: theme Kinshima (nuit / royal / or)
-- `script.js`: logique metier et UI
-- `db.js`: persistence des resultats
-- `logos/`: logos des clans
+- `src/`: backend (config, db, services, routes, serveur)
+- `public/index.html`: vue publique
+- `public/admin.html`: panneau admin
+- `public/css/styles.css`: theme Kinshima (nuit / royal / or)
+- `public/js/script.js`: logique metier et UI
+- `public/js/db.js`: persistence front (IndexedDB + fallback)
+- `public/logos/`: logos des clans
+- `scripts/`: scripts superviseur et installation systemd
 
 ---
 
@@ -122,14 +124,14 @@ flowchart TD
 
 Mode local sans API (donnees locales uniquement):
 
-1. Ouvrir `index.html`.
-2. Aller sur `admin.html` via le lien en bas de page pour la gestion.
+1. Ouvrir `public/index.html`.
+2. Aller sur `public/admin.html` via le lien en bas de page pour la gestion.
 
 Mode partage multi-utilisateurs (recommande):
 
 1. Lancer le serveur Node:
    - `npm install`
-   - `node server.js`
+  - `npm start`
 2. Ouvrir:
    - `http://localhost:3000/`
 3. Tous les utilisateurs doivent passer par le meme serveur (meme URL/host).
@@ -139,18 +141,18 @@ Mode partage multi-utilisateurs (recommande):
 Mode "reste actif" (superviseur, Windows):
 
 1. Double-cliquer `start-server.cmd`
-   - ou lancer `powershell -ExecutionPolicy Bypass -File .\start-server.ps1`
-2. Le script redemarre automatiquement `server.js` si Node plante.
+  - ou lancer `powershell -ExecutionPolicy Bypass -File .\scripts\start-server.ps1`
+2. Le script redemarre automatiquement `src/server.js` si Node plante.
 3. Tant que cette session est ouverte, le serveur web et l'API restent en ligne ensemble.
 
 Mode "serveur Linux / Raspberry Pi" (recommande en production):
 
 1. Rendre executables les scripts:
-   - `chmod +x start-server.sh install-systemd.sh`
+  - `chmod +x scripts/start-server.sh scripts/install-systemd.sh`
 2. Tester le mode supervise local Linux:
-   - `./start-server.sh`
+  - `./scripts/start-server.sh`
 3. Installer comme service systemd (auto demarrage au boot + restart auto):
-   - `sudo ./install-systemd.sh`
+  - `sudo ./scripts/install-systemd.sh`
 4. Verifier le service:
    - `sudo systemctl status kinshima.service`
 5. Voir les logs:
@@ -212,7 +214,7 @@ Utilisation recommandee:
 
 ## API multi-utilisateurs
 
-Le repo inclut un backend `server.js` (Node natif, sans dependances) avec:
+Le repo inclut un backend `src/server.js` (Node natif + SQLite) avec:
 
 - `GET /api/results`
   - retourne: `{ "entries": [...], "teams": [...], "categories": [...], "tags": [...], "teamStyles": {...}, "revision": 12, "updatedAt": "2026-03-05T12:00:00.000Z" }`
@@ -223,13 +225,30 @@ Le repo inclut un backend `server.js` (Node natif, sans dependances) avec:
 - `GET /api/admin-password`
   - retourne: `{ "password": "..." }`
 - `PUT /api/admin-password`
-  - accepte: `{ "password": "..." }`
+  - accepte: `{ "password": "...", "currentPassword": "..." }`
+  - `currentPassword` est optionnel (recommande pour verification cote serveur)
 
 Stockage serveur:
 
 - fichier SQL: `data/kinshima.sqlite`
 - migration auto depuis `data/shared-state.json` au premier demarrage
 - transactions SQLite + controle `revision` pour eviter les collisions inter-instances
+
+## Hardening backend (passe 2)
+
+Variables d'environnement disponibles:
+
+- `MAX_BODY_BYTES` (defaut: `2097152`)
+- `RATE_LIMIT_WINDOW_MS` (defaut: `60000`)
+- `MAX_WRITE_REQUESTS_PER_WINDOW` (defaut: `30`)
+- `ENABLE_REQUEST_LOGS` (`true` par defaut)
+- `ACCESS_CONTROL_ALLOW_ORIGIN` (defaut: `*`)
+- `ENFORCE_ADMIN_WRITE_AUTH` (`false` par defaut)
+
+Quand `ENFORCE_ADMIN_WRITE_AUTH=true`, les requetes d'ecriture `PUT /api/results` et `PUT /api/admin-password` doivent fournir le mot de passe admin via:
+
+- header `X-Admin-Password: <mot_de_passe>`
+- ou header `Authorization: Bearer <mot_de_passe>`
 
 ---
 

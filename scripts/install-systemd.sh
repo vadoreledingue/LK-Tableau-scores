@@ -2,7 +2,8 @@
 set -euo pipefail
 
 SERVICE_NAME="kinshima.service"
-PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 RUN_USER="${SUDO_USER:-$(whoami)}"
 TARGET_FILE="/etc/systemd/system/${SERVICE_NAME}"
 
@@ -27,7 +28,7 @@ User=${RUN_USER}
 WorkingDirectory=${PROJECT_DIR}
 Environment=NODE_ENV=production
 Environment=PORT=3000
-ExecStart=/usr/bin/env bash ${PROJECT_DIR}/start-server.sh
+ExecStart=/usr/bin/env bash ${PROJECT_DIR}/scripts/start-server.sh
 Restart=always
 RestartSec=2
 StandardOutput=journal

@@ -4,7 +4,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-$serverScript = Join-Path $scriptRoot "server.js"
+$serverScript = Join-Path $scriptRoot "..\src\server.js"
+$serverScript = [System.IO.Path]::GetFullPath($serverScript)
 
 if (-not (Test-Path $serverScript)) {
   throw "Fichier introuvable: $serverScript"
