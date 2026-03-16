@@ -16,7 +16,8 @@
 </p>
 
 <p align="center">
-  Site en ligne: <a href="http://kinshima.duckdns.org:8080/">http://kinshima.duckdns.org:8080/</a>
+  Site en ligne (production): <a href="http://kinshima.duckdns.org:3000/">http://kinshima.duckdns.org:3000/</a><br />
+  Local (Node par defaut): <a href="http://localhost:3000/">http://localhost:3000/</a>
 </p>
 
 ---
@@ -122,6 +123,12 @@ flowchart TD
 
 ## Demarrage
 
+Ports utilises:
+
+- Execution Node directe (`npm start`, scripts `scripts/start-server.*`): `3000` par defaut
+- Docker Compose (`docker compose up --build`): `8080` (configure via `PORT=8080` dans `compose.yaml`)
+- Variable d'environnement `PORT`: permet de surcharger le port dans tous les modes
+
 Mode local sans API (donnees locales uniquement):
 
 1. Ouvrir `public/index.html`.
@@ -131,7 +138,9 @@ Mode partage multi-utilisateurs (recommande):
 
 1. Lancer le serveur Node:
    - `npm install`
-  - `npm start`
+
+- `npm start`
+
 2. Ouvrir:
    - `http://localhost:3000/`
 3. Tous les utilisateurs doivent passer par le meme serveur (meme URL/host).
@@ -141,22 +150,40 @@ Mode partage multi-utilisateurs (recommande):
 Mode "reste actif" (superviseur, Windows):
 
 1. Double-cliquer `start-server.cmd`
-  - ou lancer `powershell -ExecutionPolicy Bypass -File .\scripts\start-server.ps1`
+
+- ou lancer `powershell -ExecutionPolicy Bypass -File .\scripts\start-server.ps1`
+
 2. Le script redemarre automatiquement `src/server.js` si Node plante.
 3. Tant que cette session est ouverte, le serveur web et l'API restent en ligne ensemble.
 
 Mode "serveur Linux / Raspberry Pi" (recommande en production):
 
 1. Rendre executables les scripts:
-  - `chmod +x scripts/start-server.sh scripts/install-systemd.sh`
+
+- `chmod +x scripts/start-server.sh scripts/install-systemd.sh`
+
 2. Tester le mode supervise local Linux:
-  - `./scripts/start-server.sh`
+
+- `./scripts/start-server.sh`
+
 3. Installer comme service systemd (auto demarrage au boot + restart auto):
-  - `sudo ./scripts/install-systemd.sh`
+
+- `sudo ./scripts/install-systemd.sh`
+
 4. Verifier le service:
    - `sudo systemctl status kinshima.service`
 5. Voir les logs:
    - `sudo journalctl -u kinshima.service -f`
+
+Mode Docker Compose:
+
+1. Lancer:
+
+- `docker compose up --build`
+
+2. Ouvrir:
+
+- `http://localhost:8080/`
 
 Mise a jour serveur Linux:
 
