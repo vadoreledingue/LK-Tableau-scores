@@ -996,7 +996,20 @@ tbody tr:hover {
   display: none;
 }
 
+#fast-mobile-feedback {
+  display: none;
+  margin-top: 0.6rem;
+}
+
 @media (max-width: 560px) {
+  .fast-point-add-page #admin-feedback {
+    display: none;
+  }
+
+  .fast-point-add-page #fast-mobile-feedback:not(.hidden) {
+    display: block;
+  }
+
   .fast-season-row {
     grid-template-columns: 68px 1fr 68px;
   }
