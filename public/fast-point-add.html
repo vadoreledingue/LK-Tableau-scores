@@ -16,7 +16,7 @@
 
     <p class="kicker">Ligue Kinshima</p>
     <h1>Fast point add</h1>
-    <p class="subtitle">Ajout de score rapide par boutons interactifs, optimise mobile.</p>
+    <p class="subtitle">Ajout rapide d'un point par clan avec categorie et event tag conserves jusqu'au prochain changement.</p>
     <a class="kinshima-link" href="admin.html">Retour au panneau admin</a>
   </header>
 
@@ -44,25 +44,28 @@
         <p id="admin-feedback" class="feedback hidden"></p>
 
         <section class="fast-add-shell">
-          <div class="fast-season-row">
-            <button id="fast-season-prev" type="button" class="ghost">-1</button>
-            <label class="fast-season-input-wrap">
-              Saison
-              <input id="fast-season-input" type="text" value="LK26" maxlength="4" />
-            </label>
-            <button id="fast-season-next" type="button">+1</button>
-          </div>
-          <div id="fast-current-selection" class="fast-context"></div>
+          <section class="fast-group">
+            <h3>Configuration rapide</h3>
+            <p id="fast-season-label" class="note"></p>
+            <div class="fast-grid fast-grid-tight">
+              <label>
+                Event tag
+                <select id="tag" required></select>
+              </label>
+              <label>
+                Categorie
+                <select id="category" required></select>
+              </label>
+            </div>
+            <div id="fast-current-selection" class="fast-context"></div>
+          </section>
 
           <section class="fast-group">
-            <div class="fast-stage-head">
-              <h3 id="fast-stage-title">Clan</h3>
-              <button id="fast-stage-back" type="button" class="ghost hidden">Retour</button>
-            </div>
-            <p id="fast-stage-progress" class="note">1/3</p>
-            <p id="fast-stage-hint" class="note fast-stage-hint"></p>
-            <div id="fast-stage-content" class="fast-stage-content"></div>
+            <h3>Ajouter 1 point</h3>
+            <p class="note">Les selections restent actives tant que tu ne les changes pas.</p>
+            <div id="fast-clan-buttons" class="fast-stage-content fast-grid"></div>
           </section>
+
           <p id="fast-last-entry" class="note"></p>
         </section>
 
@@ -70,8 +73,6 @@
           <input id="season" type="text" list="seasons-list" />
           <datalist id="seasons-list"></datalist>
           <select id="team"></select>
-          <select id="category"></select>
-          <select id="tag"></select>
           <input id="score" type="number" min="0" max="1000" />
           <input id="note" type="text" maxlength="80" />
           <input id="occurred-at" type="datetime-local" step="60" />

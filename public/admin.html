@@ -16,7 +16,7 @@
 
     <p class="kicker">Ligue Kinshima</p>
     <h1>Panneau administration</h1>
-    <p class="subtitle">Gestion des scores, des clans, des categories et de l'identite visuelle.</p>
+    <p class="subtitle">Gestion des scores, des clans et de l'identite visuelle.</p>
     <a class="kinshima-link" href="index.html">Retour a la page publique</a>
   </header>
 
@@ -76,7 +76,7 @@
 
               <label>
                 Note combat
-                <input id="note" type="text" maxlength="80" placeholder="Ex: Duel final" />
+                <input id="note" type="text" maxlength="80" placeholder="Ex: Tableau principal" />
               </label>
 
               <label>
@@ -148,70 +148,6 @@
           </section>
 
           <section class="admin-card">
-            <h3>Categories martiales et narratives</h3>
-            <p class="note">Narratives prises en charge: Missions, Quetes, Craft, Duel, Hugen.</p>
-            <form id="category-rename-form" class="inline-form">
-              <label>
-                Categorie existante
-                <select id="category-rename-select"></select>
-              </label>
-              <label>
-                Nouveau nom
-                <input id="category-rename-input" type="text" maxlength="40" required />
-              </label>
-              <button type="submit">Renommer</button>
-            </form>
-
-            <form id="category-add-form" class="inline-form">
-              <label>
-                Ajouter une categorie
-                <input id="category-add-input" type="text" maxlength="40" placeholder="Ex: Kinyobis ou Missions" required />
-              </label>
-              <button type="submit">Ajouter categorie</button>
-            </form>
-
-            <form id="category-delete-form" class="inline-form">
-              <label>
-                Supprimer une categorie
-                <select id="category-delete-select"></select>
-              </label>
-              <button type="submit" class="ghost">Supprimer categorie</button>
-            </form>
-          </section>
-
-          <section class="admin-card">
-            <h3>Tags d'evenement</h3>
-            <p class="note">Ex: Compette de sumo, Coupe royale, Tournoi interne.</p>
-            <form id="tag-rename-form" class="inline-form">
-              <label>
-                Tag existant
-                <select id="tag-rename-select"></select>
-              </label>
-              <label>
-                Nouveau nom
-                <input id="tag-rename-input" type="text" maxlength="50" required />
-              </label>
-              <button type="submit">Renommer</button>
-            </form>
-
-            <form id="tag-add-form" class="inline-form">
-              <label>
-                Ajouter un tag
-                <input id="tag-add-input" type="text" maxlength="50" placeholder="Ex: Compette de sumo" required />
-              </label>
-              <button type="submit">Ajouter tag</button>
-            </form>
-
-            <form id="tag-delete-form" class="inline-form">
-              <label>
-                Supprimer un tag
-                <select id="tag-delete-select"></select>
-              </label>
-              <button type="submit" class="ghost">Supprimer tag</button>
-            </form>
-          </section>
-
-          <section class="admin-card">
             <h3>Securite admin</h3>
             <form id="admin-password-change-form" class="inline-form">
               <label>
@@ -273,7 +209,7 @@
                   <th>Saison</th>
                   <th>Clan</th>
                   <th>Categorie</th>
-                  <th>Tag</th>
+                  <th>Event tag</th>
                   <th>Score</th>
                   <th>Note</th>
                   <th>Actions</th>

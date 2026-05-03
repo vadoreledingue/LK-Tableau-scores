@@ -1,8 +1,8 @@
 {
   "entries": [],
   "teams": [],
-  "categories": [],
-  "tags": [],
+  "categories": ["petit", "moyen", "grands"],
+  "tags": ["kata", "frappe", "lutte", "sol"],
   "teamStyles": {},
   "adminPassword": "Kinshima-Admin-2026",
   "revision": 0,
