@@ -27,6 +27,11 @@ RUN --mount=type=cache,target=/root/.npm \
 # Copy the rest of the source files into the image.
 COPY --chown=node:node . .
 
+# Ensure the SQLite data directory remains writable inside the image.
+RUN mkdir -p /usr/src/app/data \
+    && chown -R node:node /usr/src/app \
+    && chmod -R u+rwX /usr/src/app/data
+
 # Run the application as a non-root user.
 USER node
 

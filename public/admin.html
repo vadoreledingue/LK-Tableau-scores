@@ -148,6 +148,70 @@
           </section>
 
           <section class="admin-card">
+            <h3>Gestion des categories</h3>
+            <p class="note">Les categories restent modifiables depuis l'admin.</p>
+            <form id="category-rename-form" class="inline-form">
+              <label>
+                Categorie existante
+                <select id="category-rename-select"></select>
+              </label>
+              <label>
+                Nouveau nom
+                <input id="category-rename-input" type="text" maxlength="40" required />
+              </label>
+              <button type="submit">Renommer</button>
+            </form>
+
+            <form id="category-add-form" class="inline-form">
+              <label>
+                Ajouter une categorie
+                <input id="category-add-input" type="text" maxlength="40" placeholder="Ex: petit ou invitables" required />
+              </label>
+              <button type="submit">Ajouter categorie</button>
+            </form>
+
+            <form id="category-delete-form" class="inline-form">
+              <label>
+                Supprimer une categorie
+                <select id="category-delete-select"></select>
+              </label>
+              <button type="submit" class="ghost">Supprimer categorie</button>
+            </form>
+          </section>
+
+          <section class="admin-card">
+            <h3>Gestion des event tags</h3>
+            <p class="note">Les event tags restent modifiables depuis l'admin.</p>
+            <form id="tag-rename-form" class="inline-form">
+              <label>
+                Event tag existant
+                <select id="tag-rename-select"></select>
+              </label>
+              <label>
+                Nouveau nom
+                <input id="tag-rename-input" type="text" maxlength="50" required />
+              </label>
+              <button type="submit">Renommer</button>
+            </form>
+
+            <form id="tag-add-form" class="inline-form">
+              <label>
+                Ajouter un event tag
+                <input id="tag-add-input" type="text" maxlength="50" placeholder="Ex: kata" required />
+              </label>
+              <button type="submit">Ajouter event tag</button>
+            </form>
+
+            <form id="tag-delete-form" class="inline-form">
+              <label>
+                Supprimer un event tag
+                <select id="tag-delete-select"></select>
+              </label>
+              <button type="submit" class="ghost">Supprimer event tag</button>
+            </form>
+          </section>
+
+          <section class="admin-card">
             <h3>Securite admin</h3>
             <form id="admin-password-change-form" class="inline-form">
               <label>

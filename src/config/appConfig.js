@@ -34,8 +34,8 @@ const STATIC_DIR = path.join(APP_ROOT, "public");
 const DATA_DIR = path.join(APP_ROOT, "data");
 const DB_FILE = path.join(DATA_DIR, "kinshima.sqlite");
 const LEGACY_STATE_FILE = path.join(DATA_DIR, "shared-state.json");
-const FIXED_CATEGORIES = ["petit", "moyen", "grands"];
-const FIXED_EVENT_TAGS = ["kata", "frappe", "lutte", "sol"];
+const DEFAULT_CATEGORIES = ["petit", "moyen", "grands"];
+const DEFAULT_EVENT_TAGS = ["kata", "frappe", "lutte", "sol"];
 
 const CONTENT_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -53,8 +53,8 @@ const CONTENT_TYPES = {
 const DEFAULT_SHARED_STATE = {
   entries: [],
   teams: [],
-  categories: [...FIXED_CATEGORIES],
-  tags: [...FIXED_EVENT_TAGS],
+  categories: [...DEFAULT_CATEGORIES],
+  tags: [...DEFAULT_EVENT_TAGS],
   teamStyles: {},
   adminPassword: DEFAULT_ADMIN_PASSWORD,
   revision: 0,
@@ -75,8 +75,8 @@ module.exports = {
   DATA_DIR,
   DB_FILE,
   LEGACY_STATE_FILE,
-  FIXED_CATEGORIES,
-  FIXED_EVENT_TAGS,
+  DEFAULT_CATEGORIES,
+  DEFAULT_EVENT_TAGS,
   CONTENT_TYPES,
   DEFAULT_SHARED_STATE
 };

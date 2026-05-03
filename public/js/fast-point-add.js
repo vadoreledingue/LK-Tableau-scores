@@ -2,7 +2,7 @@
   const pageRoot = document.querySelector(".fast-point-add-page");
   if (!pageRoot) return;
 
-  const seasonLabel = document.getElementById("fast-season-label");
+  const seasonField = document.getElementById("fast-season-input");
   const currentSelection = document.getElementById("fast-current-selection");
   const clanButtons = document.getElementById("fast-clan-buttons");
   const lastEntry = document.getElementById("fast-last-entry");
@@ -19,6 +19,8 @@
   bootstrapFastUI();
 
   function wireFastEvents() {
+    seasonField?.addEventListener("change", syncSeasonField);
+    seasonField?.addEventListener("blur", syncSeasonField);
     categorySelect?.addEventListener("change", renderContextSummary);
     tagSelect?.addEventListener("change", renderContextSummary);
     observeSelectMutations(teamSelect, renderClanButtons);
@@ -27,7 +29,7 @@
   }
 
   function bootstrapFastUI(retry = 0) {
-    if (!seasonInput || !teamSelect || !categorySelect || !tagSelect || !scoreInput || !occurredAtInput) return;
+    if (!seasonInput || !seasonField || !teamSelect || !categorySelect || !tagSelect || !scoreInput || !occurredAtInput) return;
     if (!teamSelect.options.length || !categorySelect.options.length || !tagSelect.options.length) {
       if (retry < 40) window.setTimeout(() => bootstrapFastUI(retry + 1), 120);
       return;
@@ -42,10 +44,18 @@
     if (!seasonInput.value) seasonInput.value = getCurrentSeasonCodeLocal();
     if (!optionExists(categorySelect, categorySelect.value)) categorySelect.value = categorySelect.options[0]?.value || "";
     if (!optionExists(tagSelect, tagSelect.value)) tagSelect.value = tagSelect.options[0]?.value || "";
+    syncSeasonField();
     scoreInput.value = "1";
     noteInput.value = "";
     occurredAtInput.value = getNowLocalValue();
-    if (seasonLabel) seasonLabel.textContent = `Saison active: ${seasonInput.value}`;
+    renderContextSummary();
+  }
+
+  function syncSeasonField() {
+    if (!seasonField || !seasonInput) return;
+    const normalized = normalizeSeasonCodeLocal(seasonField.value) || normalizeSeasonCodeLocal(seasonInput.value) || getCurrentSeasonCodeLocal();
+    seasonField.value = normalized;
+    seasonInput.value = normalized;
     renderContextSummary();
   }
 
@@ -70,11 +80,12 @@
       return;
     }
 
+    syncSeasonField();
     const season = normalizeSeasonCodeLocal(seasonInput?.value) || getCurrentSeasonCodeLocal();
     const category = categorySelect?.value || "";
     const tag = tagSelect?.value || "";
     if (!season || !category || !tag) {
-      showFastFeedback("Selection invalide. Verifie la categorie et l'event tag.", "error");
+      showFastFeedback("Selection invalide. Verifie la saison, la categorie et l'event tag.", "error");
       return;
     }
 
@@ -103,11 +114,10 @@
       await persistEntries();
       if (typeof refreshAllControls === "function") refreshAllControls(season);
       if (typeof renderAll === "function") renderAll();
-      if (seasonLabel) seasonLabel.textContent = `Saison active: ${season}`;
       renderContextSummary();
       renderClanButtons();
       renderLastEntry();
-      showFastFeedback(`1 point ajoute a ${team} (${category} / ${tag}).`, "success");
+      showFastFeedback(`1 point ajoute a ${team} pour ${season} (${category} / ${tag}).`, "success");
     } catch {
       showFastFeedback("Erreur pendant l'ajout du point.", "error");
     }
@@ -120,14 +130,15 @@
       return;
     }
     const latest = state.entries[0];
-    lastEntry.textContent = `Dernier ajout: ${latest.team} +${latest.score} (${latest.category}, ${latest.tag})`;
+    lastEntry.textContent = `Dernier ajout: ${latest.team} +${latest.score} (${latest.season}, ${latest.category}, ${latest.tag})`;
   }
 
   function renderContextSummary() {
     if (!currentSelection) return;
+    const season = seasonInput?.value || "-";
     const category = categorySelect?.value || "-";
     const tag = tagSelect?.value || "-";
-    currentSelection.innerHTML = `<span class="fast-pill">Categorie: ${escapeHtmlLocal(category)}</span><span class="fast-pill">Event tag: ${escapeHtmlLocal(tag)}</span><span class="fast-pill">Valeur: +1</span>`;
+    currentSelection.innerHTML = `<span class="fast-pill">Saison: ${escapeHtmlLocal(season)}</span><span class="fast-pill">Categorie: ${escapeHtmlLocal(category)}</span><span class="fast-pill">Event tag: ${escapeHtmlLocal(tag)}</span><span class="fast-pill">Valeur: +1</span>`;
   }
 
   function renderTeamButton(team) {

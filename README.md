@@ -33,56 +33,48 @@
   - saisie des resultats
   - conservation des parametres de la derniere saisie (saison/clan/categorie/tag)
   - gestion des clans, categories et tags
+  - personnalisation des couleurs/logos des clans
   - gestion individuelle des resultats (modifier/supprimer)
   - pagination des resultats
   - export CSV (Excel compatible)
+- Page rapide `fast-point-add.html`:
+  - selection de la saison
+  - selection de la categorie
+  - selection de l'event tag
+  - ajout de `+1` par clic sur un clan
+  - les selections restent en place jusqu'au changement manuel
 
 ---
 
-## Structure Categories / Tags
+## Categories / Event Tags
 
-- `Categorie martiale`:
-  - `Petits`
-  - `Moyens`
-  - `Grands`
-  - `Kinyobis`
-  - `Chefs de clan`
-- `Categorie narrative`:
-  - `Missions`
-  - `Quetes`
-  - `Craft`
-  - `Duel`
-  - `Hugen`
-- `Tags d'evenement` (exemples):
-  - `Compette de sumo`
-  - `Competition generale`
-  - `Campagne narrative`
-  - `Tournoi interne`
+Valeurs par defaut actuellement chargees:
+
+- Categories:
+  - `petit`
+  - `moyen`
+  - `grands`
+- Event tags:
+  - `kata`
+  - `frappe`
+  - `lutte`
+  - `sol`
+
+Ces listes restent modifiables depuis le panneau admin.
 
 Schema Mermaid (compatible GitHub):
 
 ```mermaid
 flowchart TD
     A[Ligue Kinshima] --> C[Categories]
-    A --> T[Tags evenements]
-    C --> C1[Martiales]
-    C --> C2[Narratives]
-
-    C1 --> M1[Petits]
-    C1 --> M2[Moyens]
-    C1 --> M3[Grands]
-    C1 --> M4[Kinyobis]
-    C1 --> M5[Chefs de clan]
-
-    C2 --> N1[Missions]
-    C2 --> N2[Quetes]
-    C2 --> N3[Craft]
-    C2 --> N4[Duel]
-    C2 --> N5[Hugen]
-
-    T --> T1[Compette de sumo]
-    T --> T2[Competition generale]
-    T --> T3[Campagne narrative]
+    A --> T[Event tags]
+    C --> C1[petit]
+    C --> C2[moyen]
+    C --> C3[grands]
+    T --> T1[kata]
+    T --> T2[frappe]
+    T --> T3[lutte]
+    T --> T4[sol]
 ```
 
 ---
@@ -98,6 +90,15 @@ flowchart TD
   - categories
   - tags
   - styles visuels des clans
+
+Couleurs par defaut des clans:
+
+- `Alphanos`: brun
+- `Arturok`: vert moyen fonce
+- `Bragnir`: rouge
+- `O-Tsuyujin`: bleu moyen fonce
+- `Son-Enma`: gris
+- `Seklan`: rose violet
 
 ---
 

@@ -1,7 +1,7 @@
 "use strict";
 
-const FIXED_CATEGORIES = ["petit", "moyen", "grands"];
-const FIXED_EVENT_TAGS = ["kata", "frappe", "lutte", "sol"];
+const DEFAULT_CATEGORIES = ["petit", "moyen", "grands"];
+const DEFAULT_EVENT_TAGS = ["kata", "frappe", "lutte", "sol"];
 const CATEGORY_CANONICAL_MAP = {
   petit: "petit",
   petits: "petit",
@@ -13,10 +13,6 @@ const CATEGORY_CANONICAL_MAP = {
   grands: "grands",
   discipline: "grands"
 };
-const TAG_CANONICAL_MAP = FIXED_EVENT_TAGS.reduce((acc, tag) => {
-  acc[tag] = tag;
-  return acc;
-}, {});
 
 function cleanText(value) {
   return String(value || "").trim();
@@ -27,13 +23,13 @@ function unique(items) {
 }
 
 function normalizeCategory(value) {
-  const cleaned = cleanText(value).toLowerCase();
-  return CATEGORY_CANONICAL_MAP[cleaned] || "";
+  const cleaned = cleanText(value);
+  if (!cleaned) return "";
+  return CATEGORY_CANONICAL_MAP[cleaned.toLowerCase()] || cleaned;
 }
 
 function normalizeEventTag(value) {
-  const cleaned = cleanText(value).toLowerCase();
-  return TAG_CANONICAL_MAP[cleaned] || "";
+  return cleanText(value);
 }
 
 function normalizeEntry(entry) {
@@ -51,15 +47,7 @@ function normalizeEntry(entry) {
 }
 
 function isSupportedEntry(entry, teams) {
-  return Boolean(
-    entry &&
-      entry.season &&
-      entry.team &&
-      teams.includes(entry.team) &&
-      FIXED_CATEGORIES.includes(entry.category) &&
-      FIXED_EVENT_TAGS.includes(entry.tag) &&
-      entry.occurredAt
-  );
+  return Boolean(entry && entry.season && entry.team && teams.includes(entry.team) && entry.category && entry.tag && entry.occurredAt);
 }
 
 function normalizeState(input, defaultState) {
@@ -71,12 +59,18 @@ function normalizeState(input, defaultState) {
   const normalizedEntries = Array.isArray(state.entries)
     ? state.entries.map((entry) => normalizeEntry(entry)).filter((entry) => isSupportedEntry(entry, normalizedTeams))
     : [];
+  const normalizedCategories = Array.isArray(state.categories)
+    ? unique(state.categories.map((value) => normalizeCategory(value)).filter(Boolean))
+    : [];
+  const normalizedTags = Array.isArray(state.tags)
+    ? unique(state.tags.map((value) => normalizeEventTag(value)).filter(Boolean))
+    : [];
 
   return {
     entries: normalizedEntries,
     teams: normalizedTeams,
-    categories: [...FIXED_CATEGORIES],
-    tags: [...FIXED_EVENT_TAGS],
+    categories: normalizedCategories.length ? normalizedCategories : [...DEFAULT_CATEGORIES],
+    tags: normalizedTags.length ? normalizedTags : [...DEFAULT_EVENT_TAGS],
     teamStyles: state.teamStyles && typeof state.teamStyles === "object" ? state.teamStyles : {},
     adminPassword:
       typeof state.adminPassword === "string" && state.adminPassword.trim()
